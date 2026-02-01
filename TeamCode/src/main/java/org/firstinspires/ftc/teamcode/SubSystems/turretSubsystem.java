@@ -41,7 +41,7 @@ public class turretSubsystem extends SubsystemBase {
         leftServo = new CuttleCrServo(JeruRobot.getInstance().controlHub, 2);
 
         pid = new PIDController(kp, ki, kd);
-        encoder = new CuttleEncoder(JeruRobot.getInstance().expansionHub, 6,8192);
+        encoder = new CuttleEncoder(JeruRobot.getInstance().expansionHub, 3,(8192*(132.0/40.0)/360));
         encoder.setPose(0);
     }
 

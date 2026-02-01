@@ -26,7 +26,7 @@ public class turretTeleop extends JeruOpMode {
         robotInstance.initJeruRobot()
                 .angle(0)
                 .allianceColor(AllianceColor.BLUE)
-                .opModeType(OpModeType.TELEOP)
+                .opModeType(OpModeType.EXPERIMENTING_NO_EXPANSION_NO_SERVOHUB)
                 .build(this);
 
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).toggleWhenPressed(
