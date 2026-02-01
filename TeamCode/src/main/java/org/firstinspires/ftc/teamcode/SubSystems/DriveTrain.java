@@ -57,11 +57,10 @@ public class DriveTrain extends SubsystemBase {
 
 
         //BarnYard
-        motorFL = MecanumDrive.leftFront;
-        motorBL = MecanumDrive.leftBack;
-        motorFR = MecanumDrive.rightFront;
-        motorBR = MecanumDrive.rightBack;
-
+//        motorFL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "FL");
+//        motorBL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "BL");
+//        motorBR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "BR");
+//        motorFR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "FR");
 //        motorFR = new CuttleMotor(JeruRobot.getInstance().controlHub, 0);
 //        motorBR = new CuttleMotor(JeruRobot.getInstance().controlHub, 1);
 //        motorFL = new CuttleMotor(JeruRobot.getInstance().expansionHub, 0);
@@ -72,6 +71,10 @@ public class DriveTrain extends SubsystemBase {
 //        CuttleMotor motorBR = new CuttleMotor(JeruRobot.getInstance().controlHub, 1);
 //        CuttleMotor motorBL = new CuttleMotor(JeruRobot.getInstance().controlHub, 2);
 //        CuttleMotor motorFL = new CuttleMotor(JeruRobot.getInstance().controlHub, 3);
+        motorFL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "fl");
+        motorBL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "bl");
+        motorBR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "br");
+        motorFR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "fr");
 
         motorFL.setDirection(DcMotorEx.Direction.REVERSE);
         motorBL.setDirection(DcMotorEx.Direction.REVERSE);

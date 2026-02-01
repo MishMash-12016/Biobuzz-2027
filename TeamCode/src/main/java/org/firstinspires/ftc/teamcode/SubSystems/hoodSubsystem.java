@@ -21,7 +21,7 @@ public class hoodSubsystem extends SubsystemBase {
     }
 
     private hoodSubsystem() {
-        hoodServo = new CuttleServo(JeruRobot.getInstance().controlHub, 3);
+        hoodServo = new CuttleServo(JeruRobot.getInstance().servoHub1, 5);
     }
 
     private void setPosition(double pos) {

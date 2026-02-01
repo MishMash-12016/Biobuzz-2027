@@ -15,8 +15,10 @@ import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.SubSystems.turretSubsystem;
+
 @TeleOp
-public class Try extends JeruOpMode {
+public class turretTeleop extends JeruOpMode {
     public JeruRobot robotInstance;
     @Override
     public void initialize() {
@@ -27,8 +29,14 @@ public class Try extends JeruOpMode {
                 .opModeType(OpModeType.TELEOP)
                 .build(this);
 
+        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).toggleWhenPressed(
+                turretSubsystem.getInstance().getToAndHoldPos(() -> 90),
+                turretSubsystem.getInstance().disableSystem()
+        );
 
-
+        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(
+                turretSubsystem.getInstance().resetEncoder()
+        );
 //        new Trigger(() -> JeruRobot.getInstance().gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.05).whileActiveContinuous(
 //                DriveTrain.getInstance().slowmodeFieldOrientedDriveCommand()
 //        );
@@ -51,6 +59,11 @@ public class Try extends JeruOpMode {
 //                new InstantCommand(() -> DriveTrain.getInstance().activeFL())
 //        );
 
+    }
+    @Override
+    public void run() {
+        super.run();
+        telemetry.addData("turret angle", turretSubsystem.getInstance().getPose());
     }
 
 

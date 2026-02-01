@@ -13,8 +13,9 @@ import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.utils.Direction;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.PIDController.SimplePIDFController;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.AllianceColor;
+import com.seattlesolvers.solverslib.controller.PIDController;
+import com.seattlesolvers.solverslib.controller.PIDFController;
 
 @Config
 public class shooterSubsystem extends SubsystemBase {
@@ -27,13 +28,14 @@ public class shooterSubsystem extends SubsystemBase {
     public static double kp = 0;
     public static double ki = 0;
     public static double kd = 0;
-    public static double ks = 0;
-    public static double kv = 0;
-    public static double ka = 0;
+    public static double kf = 0.0007;
+//    public static double ks = 0;
+//    public static double kv = 0;
+//    public static double ka = 0;
     public static double tolerance = 0;
     private double lastVelocity = 0.0;
     private final ElapsedTime timer;
-    private static SimplePIDFController pid;
+    private static PIDFController pid;
     public static CuttleEncoder encoder;
 
     private static shooterSubsystem instance;
@@ -42,20 +44,20 @@ public class shooterSubsystem extends SubsystemBase {
         if (instance == null) {
             instance = new shooterSubsystem();
         }
-        pid.setPIDF(kp, ki, kd, ks, kv, ka);
+        pid.setPIDF(kp,ki,kd,kf);
         return instance;
     }
 
     private shooterSubsystem() {
-        leftMotor = new CuttleMotor(JeruRobot.getInstance().controlHub, 3);
-        rightMotor = new CuttleMotor(JeruRobot.getInstance().controlHub, 2);
+        leftMotor = new CuttleMotor(JeruRobot.getInstance().expansionHub, 2);
+        rightMotor = new CuttleMotor(JeruRobot.getInstance().expansionHub, 3);
 
         rightMotor.setDirection(Direction.REVERSE);
 
         leftMotor.setZeroPowerBehaviour(DcMotor.ZeroPowerBehavior.FLOAT);
         rightMotor.setZeroPowerBehaviour(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        pid = new SimplePIDFController(kp, ki, kd, ks, kv, ka);
+        pid = new PIDFController(kp,ki,kd,kf);
         pid.setTolerance(tolerance);
 
         encoder = new CuttleEncoder(JeruRobot.getInstance().controlHub, 3, 28);
@@ -82,7 +84,7 @@ public class shooterSubsystem extends SubsystemBase {
                 accel = (currentVelocity - lastVelocity) / dt;
             }
 
-            setPower(pid.calculate(currentVelocity, rpm, currentVelocity, accel));
+            setPower(pid.calculate(currentVelocity, rpm));
 
             lastVelocity = currentVelocity;
             timer.reset();
@@ -109,7 +111,7 @@ public class shooterSubsystem extends SubsystemBase {
     }
 
     public Boolean atSetPoint() {
-        return pid.atSetpoint();
+        return pid.atSetPoint();
     }
     public Command disableSystem() {
         return new InstantCommand(()->{},this);

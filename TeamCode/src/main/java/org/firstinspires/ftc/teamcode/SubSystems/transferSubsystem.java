@@ -21,7 +21,7 @@ public class transferSubsystem extends SubsystemBase {
     }
 
     private transferSubsystem() {
-        transferMotor = new CuttleMotor(JeruRobot.getInstance().controlHub, 3);
+        transferMotor = new CuttleMotor(JeruRobot.getInstance().expansionHub, 3);
     }
 
     private void setPower(double power) {

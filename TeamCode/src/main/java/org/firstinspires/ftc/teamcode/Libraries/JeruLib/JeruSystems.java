@@ -20,7 +20,7 @@ public class JeruSystems {
     public CuttleRevHub controlHub;
     private final String expansionHubName = "Expansion Hub 2";
     public CuttleRevHub expansionHub;
-    private final String servoHub1Name = "Servo Hub 3";
+    private final String servoHub1Name = "Servo Hub 8";//TODO: Servo Hub 3
     public CuttleRevHub servoHub1;
     private final String servoHub2Name = null;
     public CuttleRevHub servoHub2;
@@ -61,7 +61,7 @@ public class JeruSystems {
         battery = hardwareMap.voltageSensor.iterator().next();
     }
     private void initLocalize(Pose2d currentPose) {
-        localizer = hardwareMap.get(GoBildaPinpointDriverRR.class, "imu");
+        localizer = hardwareMap.get(GoBildaPinpointDriverRR.class, "pinpoint");//TODO:imu
         localizer.resetPosAndIMU();
         localizer.setOffsets(-99, 9);
         localizer.setEncoderResolution(GoBildaPinpointDriverRR.goBILDA_4_BAR_POD);

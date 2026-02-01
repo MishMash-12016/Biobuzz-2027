@@ -26,8 +26,8 @@ public class armsSubsystem extends SubsystemBase {
     }
 
     private armsSubsystem() {
-        rightServo = new CuttleServo(JeruRobot.getInstance().controlHub, 3);
-        leftServo = new CuttleServo(JeruRobot.getInstance().controlHub, 4);
+        rightServo = new CuttleServo(JeruRobot.getInstance().servoHub1, 1);
+        leftServo = new CuttleServo(JeruRobot.getInstance().servoHub1, 2);
         rightServo.setDirection(Direction.REVERSE);
 
         setPosition(closed);

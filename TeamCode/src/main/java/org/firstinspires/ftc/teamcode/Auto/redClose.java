@@ -13,6 +13,7 @@ import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import org.firstinspires.ftc.teamcode.Commands.intakeCommandGroup;
 import org.firstinspires.ftc.teamcode.Commands.shootCommandGroup;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
+import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.DriveActionCommand;
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.MecanumDrive;
 import org.firstinspires.ftc.teamcode.SubSystems.intakeSubsystem;
@@ -29,6 +30,9 @@ public class redClose extends CommandOpMode {
     @Override
     public void initialize() {
         robotInstance = JeruRobot.getInstance();
+        robotInstance.initJeruRobot()
+                .opModeType(OpModeType.AUTO)
+                .build(this);
         Pose2d startPos = new Pose2d(-60,60,Math.toRadians(60));
         MecanumDrive drive = new MecanumDrive(JeruRobot.getInstance().hardwareMap, startPos);
 

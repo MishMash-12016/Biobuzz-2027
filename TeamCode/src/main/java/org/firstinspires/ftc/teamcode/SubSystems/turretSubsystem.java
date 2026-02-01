@@ -6,11 +6,12 @@ import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.RunCommand;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
+import com.seattlesolvers.solverslib.controller.PIDController;
+import com.sun.tools.javac.file.CacheFSInfo;
 
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleCrServo;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleEncoder;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.PIDController.SimplePIDController;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.mathUtils;
 
@@ -19,23 +20,19 @@ import java.util.function.DoubleSupplier;
 public class turretSubsystem extends SubsystemBase {
     private final CuttleCrServo rightServo;
     private final CuttleCrServo leftServo;
-
+    private final PIDController pid;
+    private CuttleEncoder encoder;
     private final double MaxRange = 400;
     private final double MinRange = 0;
-
     public static double kp = 0;
     public static double ki = 0;
     public static double kd = 0;
-    private static SimplePIDController pid;
-    private final CuttleEncoder encoder;
-
     private static turretSubsystem instance;
 
     public static synchronized turretSubsystem getInstance() {
         if (instance == null) {
             instance = new turretSubsystem();
         }
-        pid.setPID(kp, ki, kd);
         return instance;
     }
 
@@ -43,8 +40,8 @@ public class turretSubsystem extends SubsystemBase {
         rightServo = new CuttleCrServo(JeruRobot.getInstance().controlHub, 1);
         leftServo = new CuttleCrServo(JeruRobot.getInstance().controlHub, 2);
 
-        pid = new SimplePIDController(kp, ki, kd);
-        encoder = new CuttleEncoder(JeruRobot.getInstance().controlHub, 0,8192);
+        pid = new PIDController(kp, ki, kd);
+        encoder = new CuttleEncoder(JeruRobot.getInstance().expansionHub, 6,8192);
         encoder.setPose(0);
     }
 
@@ -58,7 +55,7 @@ public class turretSubsystem extends SubsystemBase {
     }
 
     public Command getToAndHoldPos(DoubleSupplier pos) {
-        return new RunCommand(()->setPower(pid.calculate(encoder.getPose(), pos.getAsDouble())));
+        return new RunCommand(()->setPower(pid.calculate(encoder.getPose(), pos.getAsDouble())), this);
     }
 
     public Command targetAtGoal() {
@@ -115,6 +112,12 @@ public class turretSubsystem extends SubsystemBase {
         return targetAngle;
     }
     public Command disableSystem() {
-        return new InstantCommand(()->{},this);
+        return new InstantCommand(() -> {}, this);
+    }
+    public Command resetEncoder() {
+        return new InstantCommand(() -> encoder.setPose(0));
+    }
+    public double getPose() {
+        return encoder.getPose();
     }
 }
