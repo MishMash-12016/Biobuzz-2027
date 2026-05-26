@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.button.Trigger;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
-import org.firstinspires.ftc.teamcode.Commands.shootCommandGroup;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruOpMode;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
 import org.firstinspires.ftc.teamcode.Commands.intakeCommandGroup;
@@ -43,14 +42,6 @@ public class manualDrive extends JeruOpMode {
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).toggleWhenPressed(
                 intakeCommandGroup.intakeCommand(),
                 intakeCommandGroup.disableIntakeSystems()
-        );
-
-        //Shooter
-        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
-                shootCommandGroup.shootAll()
-        );
-        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
-                shootCommandGroup.disableShooterSubsystems()
         );
     }
 }

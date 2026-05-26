@@ -4,19 +4,16 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
-import com.acmerobotics.roadrunner.Vector2d;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.teamcode.Commands.intakeCommandGroup;
-import org.firstinspires.ftc.teamcode.Commands.shootCommandGroup;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.DriveActionCommand;
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.MecanumDrive;
-import org.firstinspires.ftc.teamcode.SubSystems.intakeSubsystem;
 
 //TODO:rot
 @Autonomous
@@ -45,9 +42,6 @@ public class redClose extends CommandOpMode {
 
 
         new SequentialCommandGroup(
-                //preload
-                shootCommandGroup.shootAll(),
-
                 //first
                 new DriveActionCommand(driveToIntakeFirst).alongWith(
                         intakeCommandGroup.intakeCommand())
