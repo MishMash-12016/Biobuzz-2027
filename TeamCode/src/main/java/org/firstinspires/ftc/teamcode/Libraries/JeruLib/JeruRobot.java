@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Libraries.JeruLib;
 import static com.qualcomm.robotcore.util.RobotLog.a;
 import static com.qualcomm.robotcore.util.RobotLog.d;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.AllianceColor;
@@ -33,7 +34,7 @@ public class JeruRobot extends JeruSystems {
 
     private void initJeruBasics(OpMode opMode, OpModeType opModeType, AllianceColor allianceColor, int startAngle) {
         hardwareMap = opMode.hardwareMap;
-        telemetry = opMode.telemetry;
+
 
         this.opModeType = opModeType;
         this.allianceColor = allianceColor;

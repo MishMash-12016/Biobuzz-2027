@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.TeleOP;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.button.Trigger;
@@ -18,19 +20,26 @@ import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.turretSubsystem;
 
 @TeleOp
+@Config
 public class turretTeleop extends JeruOpMode {
     public JeruRobot robotInstance;
+    public static double turrretPos = 45;
     @Override
     public void initialize() {
         robotInstance = JeruRobot.getInstance();
         robotInstance.initJeruRobot()
-                .angle(0)
+                .angle(270)
                 .allianceColor(AllianceColor.BLUE)
-                .opModeType(OpModeType.EXPERIMENTING_NO_EXPANSION_NO_SERVOHUB)
+                .opModeType(OpModeType.TELEOP)
                 .build(this);
 
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).toggleWhenPressed(
-                turretSubsystem.getInstance().getToAndHoldPos(() -> 90),
+                turretSubsystem.getInstance().getToAndHoldPos(() -> turrretPos),
+                turretSubsystem.getInstance().disableSystem()
+        );
+
+        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).toggleWhenPressed(
+                turretSubsystem.getInstance().targetAtGoal(),
                 turretSubsystem.getInstance().disableSystem()
         );
 
@@ -63,6 +72,11 @@ public class turretTeleop extends JeruOpMode {
     @Override
     public void run() {
         super.run();
+        FtcDashboard.getInstance().getTelemetry().addData("turretP:", turretSubsystem.getInstance().getPose());
+        FtcDashboard.getInstance().getTelemetry().addData("target:", turrretPos);
+        FtcDashboard.getInstance().getTelemetry().addData("target:", turretSubsystem.getInstance().getNormalizeTargetAngle());
+        FtcDashboard.getInstance().getTelemetry().addData("robot pos:", JeruRobot.getInstance().localizer.getPositionRR());
+
         telemetry.addData("turret angle", turretSubsystem.getInstance().getPose());
     }
 

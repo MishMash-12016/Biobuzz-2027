@@ -11,6 +11,7 @@ import com.sun.tools.javac.file.CacheFSInfo;
 
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleCrServo;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleEncoder;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.utils.MathUtils;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.mathUtils;
@@ -20,7 +21,7 @@ import java.util.function.DoubleSupplier;
 public class turretSubsystem extends SubsystemBase {
     private final CuttleCrServo rightServo;
     private final CuttleCrServo leftServo;
-    private final PIDController pid;
+    private static PIDController pid;
     private CuttleEncoder encoder;
     private final double MaxRange = 400;
     private final double MinRange = 0;
@@ -33,12 +34,13 @@ public class turretSubsystem extends SubsystemBase {
         if (instance == null) {
             instance = new turretSubsystem();
         }
+        pid.setPID(kp, ki, kd);
         return instance;
     }
 
     private turretSubsystem() {
-        rightServo = new CuttleCrServo(JeruRobot.getInstance().controlHub, 1);
-        leftServo = new CuttleCrServo(JeruRobot.getInstance().controlHub, 2);
+        rightServo = new CuttleCrServo(JeruRobot.getInstance().servoHub1, 3);
+        leftServo = new CuttleCrServo(JeruRobot.getInstance().servoHub1, 4);
 
         pid = new PIDController(kp, ki, kd);
         encoder = new CuttleEncoder(JeruRobot.getInstance().expansionHub, 3,(8192*(132.0/40.0)/360));
@@ -46,6 +48,8 @@ public class turretSubsystem extends SubsystemBase {
     }
 
     private void setPower(double power) {
+        if (Math.abs(power) > 0.5)
+            power = 0.5 * Math.signum(power);
         rightServo.setPower(power);
         leftServo.setPower(power);
     }
@@ -55,7 +59,9 @@ public class turretSubsystem extends SubsystemBase {
     }
 
     public Command getToAndHoldPos(DoubleSupplier pos) {
-        return new RunCommand(()->setPower(pid.calculate(encoder.getPose(), pos.getAsDouble())), this);
+        return new RunCommand(()->{
+            setPower(pid.calculate(encoder.getPose(), pos.getAsDouble()));
+               }, this);
     }
 
     public Command targetAtGoal() {
@@ -97,10 +103,10 @@ public class turretSubsystem extends SubsystemBase {
 
     private double getFiledOrientedTargetAngle() {
         return Math.toDegrees(Math.atan2(getTargetGoal().y, JeruRobot.getInstance().localizer.getPositionRR().position.x))
-                + 180 - Math.toDegrees(JeruRobot.getInstance().localizer.getPositionRR().heading.toDouble());
+                + 180 + Math.toDegrees(JeruRobot.getInstance().localizer.getPositionRR().heading.toDouble());
     }
 
-    private double getNormalizeTargetAngle() {
+    public double getNormalizeTargetAngle() {
         double targetAngle = getFiledOrientedTargetAngle();
 
         if (targetAngle+360 < MaxRange && mathUtils.is_closer_to(encoder.getPose(), targetAngle, targetAngle+360))
