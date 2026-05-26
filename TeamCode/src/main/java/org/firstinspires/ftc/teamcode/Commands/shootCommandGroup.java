@@ -7,8 +7,10 @@ import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import com.seattlesolvers.solverslib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.SubSystems.armsSubsystem;
+import org.firstinspires.ftc.teamcode.SubSystems.hoodSubsystem;
 import org.firstinspires.ftc.teamcode.SubSystems.intakeSubsystem;
 import org.firstinspires.ftc.teamcode.SubSystems.turretSubsystem;
+import org.firstinspires.ftc.teamcode.SubSystems.shooterSubsystem;
 import org.firstinspires.ftc.teamcode.SubSystems.transferSubsystem;
 
 public class shootCommandGroup {
