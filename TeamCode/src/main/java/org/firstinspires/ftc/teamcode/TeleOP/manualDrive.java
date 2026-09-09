@@ -29,7 +29,7 @@ public class manualDrive extends JeruOpMode {
         new Trigger(() -> JeruRobot.getInstance().gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.05).whileActiveContinuous(
                 DriveTrain.getInstance().slowmodeFieldOrientedDriveCommand()
         );
-        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.OPTIONS).whenPressed(
+        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(
                 DriveTrain.getInstance().resetYawCommand()
         );
 

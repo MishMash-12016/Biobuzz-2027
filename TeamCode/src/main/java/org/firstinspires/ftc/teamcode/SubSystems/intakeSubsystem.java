@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
@@ -8,7 +9,13 @@ import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
 
 public class intakeSubsystem extends SubsystemBase {
-    private final CuttleMotor intakeMotor;
+    private final DcMotorEx intakeMotor;
+
+
+
+
+
+
     private static intakeSubsystem instance;
 
     public static synchronized intakeSubsystem getInstance() {
@@ -19,8 +26,13 @@ public class intakeSubsystem extends SubsystemBase {
     }
 
     private intakeSubsystem() {
-        intakeMotor = new CuttleMotor(JeruRobot.getInstance().controlHub, 3);
+        intakeMotor = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "intakeMotor");
     }
+
+
+
+
+    ;
 
     private void setPower(double power) {
         intakeMotor.setPower(power);

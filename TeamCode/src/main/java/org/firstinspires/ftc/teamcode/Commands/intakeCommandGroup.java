@@ -1,11 +1,19 @@
 package org.firstinspires.ftc.teamcode.Commands;
 
 import com.seattlesolvers.solverslib.command.Command;
+import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.ParallelCommandGroup;
+import com.seattlesolvers.solverslib.command.ParallelDeadlineGroup;
+import com.seattlesolvers.solverslib.command.ParallelRaceGroup;
+import com.seattlesolvers.solverslib.command.RunCommand;
+import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.teamcode.SubSystems.armsSubsystem;
 import org.firstinspires.ftc.teamcode.SubSystems.intakeSubsystem;
 import org.firstinspires.ftc.teamcode.SubSystems.transferSubsystem;
+
+
+
 
 public class intakeCommandGroup {
     public static Command intakeCommand() {
@@ -22,3 +30,8 @@ public class intakeCommandGroup {
         );
     }
 }
+
+
+
+
+

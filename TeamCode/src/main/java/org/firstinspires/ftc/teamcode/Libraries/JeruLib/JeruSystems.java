@@ -13,10 +13,13 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleRevHub;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.SubSystems.armsSubsystem;
+import org.firstinspires.ftc.teamcode.SubSystems.intakeSubsystem;
+import org.firstinspires.ftc.teamcode.SubSystems.transferSubsystem;
 
 import java.util.List;
 
-public class JeruSystems {
+    public class JeruSystems {
     private final String controlHubName = "Control Hub";
     public CuttleRevHub controlHub;
     private final String expansionHubName = "Expansion Hub 2";
@@ -35,9 +38,12 @@ public class JeruSystems {
     public GoBildaPinpointDriverRR localizer;
 
     private void initDriveTrainDefaultCommand() {
+
         DriveTrain.getInstance().setDefaultCommand(
                 DriveTrain.getInstance().fieldOrientedDriveCommand());
+
     }
+
     private void initSystems(OpMode opMode) {
         //TODO:may need to change name based on your control and expansion hubs name
         this.controlHub = new CuttleRevHub(hardwareMap, controlHubName);
@@ -60,6 +66,14 @@ public class JeruSystems {
         gamepadEx2 = new GamepadEx(opMode.gamepad2);
 
         battery = hardwareMap.voltageSensor.iterator().next();
+
+        initSubsystems();
+    }
+    private void initSubsystems(){
+        armsSubsystem.getInstance();
+        DriveTrain.getInstance();
+        intakeSubsystem.getInstance();
+        transferSubsystem.getInstance();
     }
     private void initLocalize(Pose2d currentPose) {
         localizer = hardwareMap.get(GoBildaPinpointDriverRR.class, "pinpoint");//TODO:imu

@@ -30,7 +30,7 @@ public class armsSubsystem extends SubsystemBase {
         leftServo = new CuttleServo(JeruRobot.getInstance().servoHub1, 2);
         rightServo.setDirection(Direction.REVERSE);
 
-        setPosition(closed);
+        setPosition(closed);//it is better to write it in the teleop
     }
 
     private void setPosition(double pos) {
