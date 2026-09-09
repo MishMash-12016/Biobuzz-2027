@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Libraries.JeruLib;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriver;
 import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriverRR;
@@ -15,16 +14,13 @@ import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.armsSubsystem;
 import org.firstinspires.ftc.teamcode.SubSystems.intakeSubsystem;
-import org.firstinspires.ftc.teamcode.SubSystems.transferSubsystem;
 
-import java.util.List;
-
-    public class JeruSystems {
+public class JeruSystems {
     private final String controlHubName = "Control Hub";
     public CuttleRevHub controlHub;
     private final String expansionHubName = "Expansion Hub 2";
     public CuttleRevHub expansionHub;
-    private final String servoHub1Name = "Servo Hub 8";//TODO: Servo Hub 3
+    private final String servoHub1Name = null;//TODO: Servo Hub 3
     public CuttleRevHub servoHub1;
     private final String servoHub2Name = null;
     public CuttleRevHub servoHub2;
@@ -47,7 +43,7 @@ import java.util.List;
     private void initSystems(OpMode opMode) {
         //TODO:may need to change name based on your control and expansion hubs name
         this.controlHub = new CuttleRevHub(hardwareMap, controlHubName);
-        if (JeruRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION ||
+        if (JeruRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION &&
             JeruRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION_NO_SERVOHUB) {
                 this.expansionHub = new CuttleRevHub(hardwareMap, expansionHubName);
         }
@@ -67,13 +63,12 @@ import java.util.List;
 
         battery = hardwareMap.voltageSensor.iterator().next();
 
-        initSubsystems();
+//        initSubsystems();
     }
     private void initSubsystems(){
         armsSubsystem.getInstance();
         DriveTrain.getInstance();
         intakeSubsystem.getInstance();
-        transferSubsystem.getInstance();
     }
     private void initLocalize(Pose2d currentPose) {
         localizer = hardwareMap.get(GoBildaPinpointDriverRR.class, "pinpoint");//TODO:imu

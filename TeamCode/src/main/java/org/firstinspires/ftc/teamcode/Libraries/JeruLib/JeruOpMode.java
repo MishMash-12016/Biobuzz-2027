@@ -16,7 +16,8 @@ public abstract class JeruOpMode extends CommandOpMode {
         super.run();
         //get sensors data
         JeruRobot.getInstance().controlHub.pullBulkData();
-        if (JeruRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION){
+        if (JeruRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION &&
+                JeruRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION_NO_SERVOHUB){
             JeruRobot.getInstance().expansionHub.pullBulkData();
         }
         JeruRobot.getInstance().localizer.update();

@@ -72,10 +72,10 @@ public class DriveTrain extends SubsystemBase {
 //        CuttleMotor motorBR = new CuttleMotor(JeruRobot.getInstance().controlHub, 1);
 //        CuttleMotor motorBL = new CuttleMotor(JeruRobot.getInstance().controlHub, 2);
 //        CuttleMotor motorFL = new CuttleMotor(JeruRobot.getInstance().controlHub, 3);
-        motorFL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "fl");
-        motorBL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "bl");
-        motorBR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "br");
-        motorFR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "fr");
+        motorFL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "frontLeftMotor");
+        motorBL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "backLeftMotor");
+        motorBR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "backRightMotor");
+        motorFR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "frontRightMotor");
 
         motorFL.setDirection(DcMotorEx.Direction.REVERSE);
         motorBL.setDirection(DcMotorEx.Direction.REVERSE);

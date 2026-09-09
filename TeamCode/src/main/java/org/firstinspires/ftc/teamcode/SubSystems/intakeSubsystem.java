@@ -10,12 +10,6 @@ import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
 
 public class intakeSubsystem extends SubsystemBase {
     private final DcMotorEx intakeMotor;
-
-
-
-
-
-
     private static intakeSubsystem instance;
 
     public static synchronized intakeSubsystem getInstance() {
@@ -24,16 +18,9 @@ public class intakeSubsystem extends SubsystemBase {
         }
         return instance;
     }
-
     private intakeSubsystem() {
         intakeMotor = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "intakeMotor");
     }
-
-
-
-
-    ;
-
     private void setPower(double power) {
         intakeMotor.setPower(power);
     }

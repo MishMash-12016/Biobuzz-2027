@@ -34,7 +34,7 @@ public class JeruRobot extends JeruSystems {
 
     private void initJeruBasics(OpMode opMode, OpModeType opModeType, AllianceColor allianceColor, int startAngle) {
         hardwareMap = opMode.hardwareMap;
-
+        telemetry = opMode.telemetry;
 
         this.opModeType = opModeType;
         this.allianceColor = allianceColor;
