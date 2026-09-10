@@ -17,6 +17,7 @@ public class JeruRobot extends JeruSystems {
     private static JeruRobot instance;
     public OpModeType opModeType;
     public AllianceColor allianceColor;
+    public Boolean initDriveTrain = true;
     public int startAngle;
 
     private JeruRobot(){}
@@ -32,12 +33,13 @@ public class JeruRobot extends JeruSystems {
         instance = null;
     }
 
-    private void initJeruBasics(OpMode opMode, OpModeType opModeType, AllianceColor allianceColor, int startAngle) {
+    private void initJeruBasics(OpMode opMode, OpModeType opModeType, AllianceColor allianceColor, int startAngle, boolean initDriveTrain) {
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
 
         this.opModeType = opModeType;
         this.allianceColor = allianceColor;
+        this.initDriveTrain = initDriveTrain;
         this.startAngle = startAngle;
 
         initJeruSystems(opMode);
@@ -50,6 +52,7 @@ public class JeruRobot extends JeruSystems {
     public static class Builder {
         private OpModeType opModeType = OpModeType.TELEOP;
         private AllianceColor allianceColor = AllianceColor.RED;
+        private boolean initDriveTrain = true;
         private int startAngle = 0;
 
         public Builder opModeType(OpModeType opModeType) {
@@ -64,9 +67,13 @@ public class JeruRobot extends JeruSystems {
             this.startAngle = startAngle;
             return this;
         }
+        public Builder WithoutDriveTrain() {
+            this.initDriveTrain = false;
+            return this;
+        }
 
         public void build(OpMode opMode) {
-            JeruRobot.getInstance().initJeruBasics(opMode, opModeType, allianceColor, startAngle);
+            JeruRobot.getInstance().initJeruBasics(opMode, opModeType, allianceColor, startAngle, initDriveTrain);
         }
     }
 }

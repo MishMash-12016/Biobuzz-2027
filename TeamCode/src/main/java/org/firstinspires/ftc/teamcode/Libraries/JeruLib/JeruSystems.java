@@ -65,13 +65,14 @@ public class JeruSystems {
 
 //        initSubsystems();
     }
+    //TODO: don't use while experimenting, there will be errors in the configuration
     private void initSubsystems(){
         armsSubsystem.getInstance();
         DriveTrain.getInstance();
         intakeSubsystem.getInstance();
     }
     private void initLocalize(Pose2d currentPose) {
-        localizer = hardwareMap.get(GoBildaPinpointDriverRR.class, "pinpoint");//TODO:imu
+        localizer = hardwareMap.get(GoBildaPinpointDriverRR.class, "pinpoint");
         localizer.resetPosAndIMU();
         localizer.setOffsets(-99, 9);
         localizer.setEncoderResolution(GoBildaPinpointDriverRR.goBILDA_4_BAR_POD);
@@ -82,7 +83,9 @@ public class JeruSystems {
 
     protected void initJeruSystems(OpMode opMode) {
         initSystems(opMode);
-        initDriveTrainDefaultCommand();
+        if (JeruRobot.getInstance().initDriveTrain) {
+            initDriveTrainDefaultCommand();
+        }
         initLocalize(new Pose2d(0,0,0));
     }
 }
