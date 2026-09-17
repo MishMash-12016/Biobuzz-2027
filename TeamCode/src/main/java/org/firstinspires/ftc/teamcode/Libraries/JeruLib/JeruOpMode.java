@@ -5,7 +5,6 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
-import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.Drawing;
 
 public abstract class JeruOpMode extends CommandOpMode {
     @Override
@@ -25,7 +24,7 @@ public abstract class JeruOpMode extends CommandOpMode {
         //fieldOverlay dashboard
         TelemetryPacket packet = new TelemetryPacket();
         packet.fieldOverlay().setStroke("#3F51B5");
-        Drawing.drawRobot(packet.fieldOverlay(), JeruRobot.getInstance().localizer.getPositionRR());
+        //todo Drawing.drawRobot(packet.fieldOverlay(), JeruRobot.getInstance().localizer.getPositionRR());
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
         //update outputs

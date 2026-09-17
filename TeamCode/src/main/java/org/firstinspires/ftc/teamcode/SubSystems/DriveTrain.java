@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode.SubSystems;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriverRR;
+import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -23,7 +24,7 @@ import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleServo;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.utils.Direction;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
-import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.MecanumDrive;
+import org.firstinspires.ftc.teamcode.Libraries.pedro.Constants;
 
 import java.util.function.DoubleSupplier;
 
@@ -43,6 +44,7 @@ public class DriveTrain extends SubsystemBase {
 
     private final double slowmodeMultiplayer = 0.3;
     private final double slowmodeYawMultiplayer = 0.3;
+    private Follower follower;
 
 
     public static synchronized DriveTrain getInstance() {
@@ -187,5 +189,12 @@ public class DriveTrain extends SubsystemBase {
         FtcDashboard.getInstance().getTelemetry().addData("frontRight", power[2]);
         FtcDashboard.getInstance().getTelemetry().addData("backRight", power[3]);
         FtcDashboard.getInstance().getTelemetry().update();
+    }
+
+    public Follower getFollower() {
+        if (follower == null) {
+            follower = Constants.create(JeruRobot.getInstance().hardwareMap);
+        }
+        return follower;
     }
 }

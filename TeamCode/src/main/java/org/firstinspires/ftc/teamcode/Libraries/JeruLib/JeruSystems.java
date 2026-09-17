@@ -31,6 +31,7 @@ public class JeruSystems {
     public GamepadEx gamepadEx1;
     public GamepadEx gamepadEx2;
     public VoltageSensor battery;
+
     public GoBildaPinpointDriverRR localizer;
 
     private void initDriveTrainDefaultCommand() {
