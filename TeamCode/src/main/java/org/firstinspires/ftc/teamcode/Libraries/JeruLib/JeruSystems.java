@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleRevHub;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
-import org.firstinspires.ftc.teamcode.SubSystems.armsSubsystem;
+import org.firstinspires.ftc.teamcode.SubSystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.SubSystems.intakeSubsystem;
 
 public class JeruSystems {
@@ -67,7 +67,7 @@ public class JeruSystems {
     }
     //TODO: don't use while experimenting, there will be errors in the configuration
     private void initSubsystems(){
-        armsSubsystem.getInstance();
+        ShooterSubsystem.getInstance();
         DriveTrain.getInstance();
         intakeSubsystem.getInstance();
     }

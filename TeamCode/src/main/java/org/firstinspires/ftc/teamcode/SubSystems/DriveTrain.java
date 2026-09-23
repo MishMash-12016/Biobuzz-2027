@@ -55,27 +55,10 @@ public class DriveTrain extends SubsystemBase {
     private DriveTrain() {
         super(); //register this subsystem, in order to schedule default command later on.
 
-
-
-        //BarnYard
-//        motorFL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "FL");
-//        motorBL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "BL");
-//        motorBR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "BR");
-//        motorFR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "FR");
-//        motorFR = new CuttleMotor(JeruRobot.getInstance().controlHub, 0);
-//        motorBR = new CuttleMotor(JeruRobot.getInstance().controlHub, 1);
-//        motorFL = new CuttleMotor(JeruRobot.getInstance().expansionHub, 0);
-//        motorBL = new CuttleMotor(JeruRobot.getInstance().expansionHub, 1);
-
-        //mishmash
-//        CuttleMotor motorFR = new CuttleMotor(JeruRobot.getInstance().controlHub, 0);
-//        CuttleMotor motorBR = new CuttleMotor(JeruRobot.getInstance().controlHub, 1);
-//        CuttleMotor motorBL = new CuttleMotor(JeruRobot.getInstance().controlHub, 2);
-//        CuttleMotor motorFL = new CuttleMotor(JeruRobot.getInstance().controlHub, 3);
-        motorFL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "frontLeftMotor");
-        motorBL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "backLeftMotor");
-        motorBR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "backRightMotor");
-        motorFR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "frontRightMotor");
+        motorFL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "FL");//2
+        motorBL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "BL");//1
+        motorBR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "BR");//3
+        motorFR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "FR");//0
 
         motorFL.setDirection(DcMotorEx.Direction.REVERSE);
         motorBL.setDirection(DcMotorEx.Direction.REVERSE);
@@ -89,16 +72,16 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void activeFL(){
-        motorFL.setPower(1);
+        motorFL.setPower(0.5);
     }
     public void activeBL(){
-        motorBL.setPower(1);
+        motorBL.setPower(0.5);
     }
     public void activeFR(){
-        motorFR.setPower(1);
+        motorFR.setPower(0.5);
     }
     public void activeBR(){
-        motorBR.setPower(1);
+        motorBR.setPower(0.5);
     }
 
     public void setYaw(double lastAngle){

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.TeleOP;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.button.Trigger;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
@@ -26,22 +27,18 @@ public class manualDrive extends JeruOpMode {
                 .build(this);
 
         //Drive
-        new Trigger(() -> JeruRobot.getInstance().gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.05).whileActiveContinuous(
+        new Trigger(() -> JeruRobot.getInstance().gamepadEx1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.05).whileActiveContinuous(
                 DriveTrain.getInstance().slowmodeFieldOrientedDriveCommand()
         );
-        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(
+
+        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.OPTIONS).whenPressed(
                 DriveTrain.getInstance().resetYawCommand()
         );
+    }
 
-        //Intake
-        new Trigger(() -> robotInstance.gamepadEx1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.05).whileActiveOnce(
-                intakeCommandGroup.intakeCommand()
-        ).whenInactive(
-                intakeCommandGroup.disableIntakeSystems()
-        );
-        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).toggleWhenPressed(
-                intakeCommandGroup.intakeCommand(),
-                intakeCommandGroup.disableIntakeSystems()
-        );
+    @Override
+    public void run() {
+        super.run();
+        telemetry.addData("angle", Math.toDegrees(JeruRobot.getInstance().localizer.getPositionRR().heading.toDouble()));
     }
 }
