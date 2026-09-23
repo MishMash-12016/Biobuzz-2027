@@ -3,17 +3,17 @@ package org.firstinspires.ftc.teamcode.Commands;
 import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.ParallelCommandGroup;
 
-import org.firstinspires.ftc.teamcode.SubSystems.intakeSubsystem;
+import org.firstinspires.ftc.teamcode.SubSystems.IntakeSubsystem;
 
 
 public class intakeCommandGroup {
     public static Command intakeCommand() {
         return new ParallelCommandGroup(
-                intakeSubsystem.getInstance().setPowerCommand(1)
+                IntakeSubsystem.getInstance().setPowerCommand(1)
         );
     }
     public static Command disableIntakeSystems() {
-        return intakeSubsystem.getInstance().setPowerCommand(0);
+        return IntakeSubsystem.getInstance().setPowerCommand(0);
     }
 }
 

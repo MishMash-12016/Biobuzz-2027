@@ -8,18 +8,18 @@ import com.seattlesolvers.solverslib.command.SubsystemBase;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
 
-public class intakeSubsystem extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
     private final DcMotorEx intakeMotor;
-    private static intakeSubsystem instance;
+    private static IntakeSubsystem instance;
 
-    public static synchronized intakeSubsystem getInstance() {
+    public static synchronized IntakeSubsystem getInstance() {
         if (instance == null) {
-            instance = new intakeSubsystem();
+            instance = new IntakeSubsystem();
         }
         return instance;
     }
-    private intakeSubsystem() {
-        intakeMotor = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "intakeMotor");
+    private IntakeSubsystem() {
+        intakeMotor = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "intake");
     }
     private void setPower(double power) {
         intakeMotor.setPower(power);

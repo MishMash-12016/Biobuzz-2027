@@ -71,17 +71,15 @@ public class DriveTrain extends SubsystemBase {
         //TODO: reverse motors
     }
 
-    public void activeFL(){
-        motorFL.setPower(0.5);
+    public void activeFL(double pow) { motorFL.setPower(pow); }
+    public void activeBL(double pow){
+        motorBL.setPower(pow);
     }
-    public void activeBL(){
-        motorBL.setPower(0.5);
+    public void activeFR(double pow){
+        motorFR.setPower(pow);
     }
-    public void activeFR(){
-        motorFR.setPower(0.5);
-    }
-    public void activeBR(){
-        motorBR.setPower(0.5);
+    public void activeBR(double pow){
+        motorBR.setPower(pow);
     }
 
     public void setYaw(double lastAngle){
@@ -170,5 +168,25 @@ public class DriveTrain extends SubsystemBase {
         FtcDashboard.getInstance().getTelemetry().addData("frontRight", power[2]);
         FtcDashboard.getInstance().getTelemetry().addData("backRight", power[3]);
         FtcDashboard.getInstance().getTelemetry().update();
+    }
+
+    public void turnWithScale(double turn) {
+        double flPower = turn;
+        double blPower = turn;
+        double frPower = -turn;
+        double brPower = -turn;
+
+        // Scale power values safely between -1.0 and 1.0
+        double max = Math.max(Math.abs(flPower), Math.abs(blPower));
+        max = Math.max(max, Math.abs(frPower));
+        max = Math.max(max, Math.abs(brPower));
+        if (max > 1.0) {
+            flPower /= max; blPower /= max; frPower /= max; brPower /= max;
+        }
+
+        motorFL.setPower(flPower);
+        motorBL.setPower(blPower);
+        motorFR.setPower(frPower);
+        motorBR.setPower(brPower);
     }
 }

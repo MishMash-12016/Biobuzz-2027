@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.ShooterSubsystem;
-import org.firstinspires.ftc.teamcode.SubSystems.intakeSubsystem;
+import org.firstinspires.ftc.teamcode.SubSystems.IntakeSubsystem;
 
 public class JeruSystems {
     private final String controlHubName = "Control Hub";
@@ -69,7 +69,7 @@ public class JeruSystems {
     private void initSubsystems(){
         ShooterSubsystem.getInstance();
         DriveTrain.getInstance();
-        intakeSubsystem.getInstance();
+        IntakeSubsystem.getInstance();
     }
     private void initLocalize(Pose2d currentPose) {
         localizer = hardwareMap.get(GoBildaPinpointDriverRR.class, "pinpoint");
