@@ -71,6 +71,10 @@ public class DriveTrain extends SubsystemBase {
         //TODO: reverse motors
     }
 
+    public void reset() {
+        instance = null;
+    }
+
     public void activeFL(double pow) { motorFL.setPower(pow); }
     public void activeBL(double pow){
         motorBL.setPower(pow);
@@ -117,6 +121,8 @@ public class DriveTrain extends SubsystemBase {
         motorBL.setPower(power[1]);
         motorFR.setPower(power[2]);
         motorBR.setPower(power[3]);
+        JeruRobot.getInstance().telemetry.addData("dir", motorBL.getDirection());
+        JeruRobot.getInstance().telemetry.addData("zero", motorBL.getZeroPowerBehavior());
 //        updateTelemetry(power);
     }
     public void drive(double x, double y, double yaw) {

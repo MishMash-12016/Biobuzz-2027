@@ -35,26 +35,29 @@ public class manualDrive extends JeruOpMode {
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.OPTIONS).whenPressed(
                 DriveTrain.getInstance().resetYawCommand()
         );
-//        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whileHeld(
-//                new RunCommand(()-> DriveTrain.getInstance().turnWithScale(-Limelight.getInstance().getResultTX()))
-//        );
 
         new Trigger(() -> JeruRobot.getInstance().gamepadEx1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.05).whileActiveContinuous(
                 IntakeSubsystem.getInstance().setPowerCommand(-1)
         ).whenInactive(IntakeSubsystem.getInstance().setPowerCommand(0));
 
+        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
+                IntakeSubsystem.getInstance().setPowerCommand(1)
+        ).whenReleased(IntakeSubsystem.getInstance().setPowerCommand(0));
 //        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whileHeld(
-////                new RunCommand(()->DriveTrain.getInstance().activeFL(1))
-////        );
-////        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whileHeld(
-////                new RunCommand(()->DriveTrain.getInstance().activeBL(1))
-////        );
-////        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whileHeld(
-////                new RunCommand(()->DriveTrain.getInstance().activeFR(1))
-////        );
-////        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whileHeld(
-////                new RunCommand(()->DriveTrain.getInstance().activeBR(1))
-////        );
+//                new RunCommand(()-> DriveTrain.getInstance().turnWithScale(-Limelight.getInstance().getResultTX()))
+//        );
+//        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whileHeld(
+//                new RunCommand(()->DriveTrain.getInstance().activeFL(1))
+//        );
+//        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whileHeld(
+//                new RunCommand(()->DriveTrain.getInstance().activeBL(1))
+//        );
+//        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whileHeld(
+//                new RunCommand(()->DriveTrain.getInstance().activeFR(1))
+//        );
+//        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whileHeld(
+//                new RunCommand(()->DriveTrain.getInstance().activeBR(1))
+//        );
 
     }
 
