@@ -5,6 +5,7 @@ import com.seattlesolvers.solverslib.command.RunCommand;
 import com.seattlesolvers.solverslib.command.button.Trigger;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruOpMode;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.AllianceColor;
@@ -64,10 +65,7 @@ public class manualDrive extends JeruOpMode {
     @Override
     public void run() {
         super.run();
-//        telemetry.addData("limelight angle", Limelight.getInstance().getResultTX());
-        telemetry.addData("getLeftX", JeruRobot.getInstance().gamepadEx1.getLeftX());
-        telemetry.addData("getLeftY", JeruRobot.getInstance().gamepadEx1.getLeftY());
-        telemetry.addData("getRightX", JeruRobot.getInstance().gamepadEx1.getRightX());
+        telemetry.addData("head", JeruRobot.getInstance().localizer.getHeading(AngleUnit.DEGREES));
         telemetry.update();
     }
 }

@@ -3,27 +3,20 @@ package org.firstinspires.ftc.teamcode.SubSystems;
 
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriverRR;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.seattlesolvers.solverslib.command.Command;
-import com.seattlesolvers.solverslib.command.CommandBase;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.RunCommand;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.geometry.Vector2d;
-import com.seattlesolvers.solverslib.hardware.motors.Motor;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleServo;
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.utils.Direction;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
-import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.MecanumDrive;
 
 import java.util.function.DoubleSupplier;
 
@@ -87,7 +80,7 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void setYaw(double lastAngle){
-        //mmRobot.mmSystems.imu.setYaw(lastAngle);//TODO:insert robot last yaw from autonomous
+        JeruRobot.getInstance().localizer.setHeading(lastAngle, AngleUnit.DEGREES);
     }
 
 
@@ -121,8 +114,7 @@ public class DriveTrain extends SubsystemBase {
         motorBL.setPower(power[1]);
         motorFR.setPower(power[2]);
         motorBR.setPower(power[3]);
-        JeruRobot.getInstance().telemetry.addData("dir", motorBL.getDirection());
-        JeruRobot.getInstance().telemetry.addData("zero", motorBL.getZeroPowerBehavior());
+
 //        updateTelemetry(power);
     }
     public void drive(double x, double y, double yaw) {
@@ -130,7 +122,7 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void resetYaw() {
-        JeruRobot.getInstance().localizer.resetYaw();
+        JeruRobot.getInstance().localizer.setHeading(0, AngleUnit.DEGREES);
     }
     public Command resetYawCommand(){
         return new InstantCommand(this::resetYaw);
@@ -138,7 +130,7 @@ public class DriveTrain extends SubsystemBase {
     private void fieldOrientedDrive(double x, double y, double yaw) {
         Vector2d joystickDirection = new Vector2d(x, y);
         Vector2d fieldOrientedVector = joystickDirection.rotateBy(
-                JeruRobot.getInstance().startAngle-Math.toDegrees(JeruRobot.getInstance().localizer.getPositionRR().heading.toDouble()));//TODO:check
+                JeruRobot.getInstance().startAngle-JeruRobot.getInstance().localizer.getHeading(AngleUnit.DEGREES));//TODO:check
         drive(fieldOrientedVector.getX(), fieldOrientedVector.getY(), yaw);
     }
 

@@ -1,14 +1,17 @@
 package org.firstinspires.ftc.teamcode.Libraries.JeruLib;
 
-import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriver;
-import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriverRR;
+import com.pedropathing.geometry.Pose;
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
+import com.seattlesolvers.solverslib.geometry.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleRevHub;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
@@ -31,7 +34,7 @@ public class JeruSystems {
     public GamepadEx gamepadEx1;
     public GamepadEx gamepadEx2;
     public VoltageSensor battery;
-    public GoBildaPinpointDriverRR localizer;
+    public GoBildaPinpointDriver localizer;
 
     private void initDriveTrainDefaultCommand() {
 
@@ -71,14 +74,13 @@ public class JeruSystems {
         DriveTrain.getInstance();
         IntakeSubsystem.getInstance();
     }
-    private void initLocalize(Pose2d currentPose) {
-        localizer = hardwareMap.get(GoBildaPinpointDriverRR.class, "pinpoint");
+    private void initLocalize(Pose currentPose) {
+        localizer = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         localizer.resetPosAndIMU();
-        localizer.setOffsets(-99, 9);
-        localizer.setEncoderResolution(GoBildaPinpointDriverRR.goBILDA_4_BAR_POD);
+        localizer.setOffsets(-99, 9, DistanceUnit.INCH);
+        localizer.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         localizer.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.REVERSED);
-        localizer.setPosition(new Pose2d(0, 0, localizer.getPositionRR().heading.toDouble() - Math.toRadians(90)));
-//        localizer.setPosition(new Pose2d(currentPose.position, currentPose.heading.toDouble() - Math.toRadians(90)));
+        localizer.setPosition(new Pose2D(DistanceUnit.INCH,0, 0, AngleUnit.DEGREES,JeruRobot.getInstance().localizer.getHeading(AngleUnit.DEGREES) - 90));
     }
 
     protected void initJeruSystems(OpMode opMode) {
@@ -86,6 +88,6 @@ public class JeruSystems {
         if (JeruRobot.getInstance().initDriveTrain) {
             initDriveTrainDefaultCommand();
         }
-        initLocalize(new Pose2d(0,0,0));
+        initLocalize(new Pose(0,0,0));
     }
 }
