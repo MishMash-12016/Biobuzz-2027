@@ -7,6 +7,8 @@ import com.seattlesolvers.solverslib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
 //import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.Drawing;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.SubSystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.SubSystems.ShooterSubsystem;
 
 public abstract class JeruOpMode extends CommandOpMode {
     @Override
@@ -37,5 +39,7 @@ public abstract class JeruOpMode extends CommandOpMode {
     public void end() {
         JeruRobot.getInstance().resetRobot();
         DriveTrain.getInstance().reset();
+        IntakeSubsystem.getInstance().reset();
+        ShooterSubsystem.getInstance().reset();
     }
 }

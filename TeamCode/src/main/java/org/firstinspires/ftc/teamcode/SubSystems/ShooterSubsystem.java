@@ -36,5 +36,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public Command getToVelocity(double vel){
         return setPowerCommand(pidf.calculate(0/*CurrentPosition*/,vel));
     }
-
+    public void reset() {
+        instance = null;
+    }
 }
