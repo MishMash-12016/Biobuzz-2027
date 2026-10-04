@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
-import com.seattlesolvers.solverslib.geometry.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -18,7 +17,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.SubSystems.IntakeSubsystem;
 
-public class JeruSystems {
+public class MMSystems {
     private final String controlHubName = "Control Hub";
     public CuttleRevHub controlHub;
     private final String expansionHubName = "Expansion Hub 2";
@@ -36,23 +35,26 @@ public class JeruSystems {
     public VoltageSensor battery;
     public GoBildaPinpointDriver localizer;
 
-    private void initDriveTrainDefaultCommand() {
+    public IntakeSubsystem intakeSubsystem;
+    public ShooterSubsystem shooterSubsystem;
+    public DriveTrain driveTrain;
 
-        DriveTrain.getInstance().setDefaultCommand(
-                DriveTrain.getInstance().fieldOrientedDriveCommand());
+    private void initDriveTrainDefaultCommand() {
+        MMRobot.getInstance().driveTrain.setDefaultCommand(
+                MMRobot.getInstance().driveTrain.fieldOrientedDriveCommand());
 
     }
 
     private void initSystems(OpMode opMode) {
         //TODO:may need to change name based on your control and expansion hubs name
         this.controlHub = new CuttleRevHub(hardwareMap, controlHubName);
-        if (JeruRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION &&
-            JeruRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION_NO_SERVOHUB) {
+        if (MMRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION &&
+            MMRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION_NO_SERVOHUB) {
                 this.expansionHub = new CuttleRevHub(hardwareMap, expansionHubName);
         }
 
-        if (JeruRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_SERVOHUB ||
-            JeruRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION_NO_SERVOHUB) {
+        if (MMRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_SERVOHUB ||
+            MMRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION_NO_SERVOHUB) {
                 if (servoHub1Name != null) {
                     this.servoHub1 = new CuttleRevHub(hardwareMap, servoHub1Name);
                 }
@@ -66,13 +68,12 @@ public class JeruSystems {
 
         battery = hardwareMap.voltageSensor.iterator().next();
 
-//        initSubsystems();
+        initSubsystems();
     }
-    //TODO: don't use while experimenting, there will be errors in the configuration
     private void initSubsystems(){
-        ShooterSubsystem.getInstance();
-        DriveTrain.getInstance();
-        IntakeSubsystem.getInstance();
+        this.driveTrain = new DriveTrain();
+        this.intakeSubsystem = new IntakeSubsystem();
+        this.shooterSubsystem = new ShooterSubsystem();
     }
     private void initLocalize(Pose currentPose) {
         localizer = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
@@ -80,12 +81,12 @@ public class JeruSystems {
         localizer.setOffsets(-99, 9, DistanceUnit.INCH);
         localizer.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         localizer.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.REVERSED);
-        localizer.setPosition(new Pose2D(DistanceUnit.INCH,0, 0, AngleUnit.DEGREES,JeruRobot.getInstance().localizer.getHeading(AngleUnit.DEGREES) - 90));
+        localizer.setPosition(new Pose2D(DistanceUnit.INCH,0, 0, AngleUnit.DEGREES, MMRobot.getInstance().localizer.getHeading(AngleUnit.DEGREES) - 90));
     }
 
     protected void initJeruSystems(OpMode opMode) {
         initSystems(opMode);
-        if (JeruRobot.getInstance().initDriveTrain) {
+        if (MMRobot.getInstance().initDriveTrain) {
             initDriveTrainDefaultCommand();
         }
         initLocalize(new Pose(0,0,0));

@@ -3,28 +3,24 @@ package org.firstinspires.ftc.teamcode.Libraries.JeruLib;
 import static com.qualcomm.robotcore.util.RobotLog.a;
 import static com.qualcomm.robotcore.util.RobotLog.d;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
 
-import java.util.ArrayList;
-import java.util.List;
 
-
-public class JeruRobot extends JeruSystems {
-    private static JeruRobot instance;
+public class MMRobot extends MMSystems {
+    private static MMRobot instance;
     public OpModeType opModeType;
     public AllianceColor allianceColor;
     public Boolean initDriveTrain = true;
     public int startAngle;
 
-    private JeruRobot(){}
+    private MMRobot(){}
 
-    public static synchronized JeruRobot getInstance() {
+    public static synchronized MMRobot getInstance() {
         if (instance == null) {
-            instance = new JeruRobot();
+            instance = new MMRobot();
         }
         return instance;
     }
@@ -73,7 +69,7 @@ public class JeruRobot extends JeruSystems {
         }
 
         public void build(OpMode opMode) {
-            JeruRobot.getInstance().initJeruBasics(opMode, opModeType, allianceColor, startAngle, initDriveTrain);
+            MMRobot.getInstance().initJeruBasics(opMode, opModeType, allianceColor, startAngle, initDriveTrain);
         }
     }
 }

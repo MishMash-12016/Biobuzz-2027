@@ -6,11 +6,9 @@ import com.seattlesolvers.solverslib.command.CommandOpMode;
 
 import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
 //import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.Drawing;
-import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
-import org.firstinspires.ftc.teamcode.SubSystems.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.SubSystems.ShooterSubsystem;
 
-public abstract class JeruOpMode extends CommandOpMode {
+
+public abstract class MMOpMode extends CommandOpMode {
     @Override
     public abstract void initialize();
 
@@ -18,12 +16,12 @@ public abstract class JeruOpMode extends CommandOpMode {
     public void run() {
         super.run();
         //get sensors data
-        JeruRobot.getInstance().controlHub.pullBulkData();
-        if (JeruRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION &&
-                JeruRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION_NO_SERVOHUB){
-            JeruRobot.getInstance().expansionHub.pullBulkData();
+        MMRobot.getInstance().controlHub.pullBulkData();
+        if (MMRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION &&
+                MMRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION_NO_SERVOHUB){
+            MMRobot.getInstance().expansionHub.pullBulkData();
         }
-        JeruRobot.getInstance().localizer.update();
+        MMRobot.getInstance().localizer.update();
 
         //fieldOverlay dashboard
         TelemetryPacket packet = new TelemetryPacket();
@@ -37,9 +35,5 @@ public abstract class JeruOpMode extends CommandOpMode {
     }
     @Override
     public void end() {
-        JeruRobot.getInstance().resetRobot();
-        DriveTrain.getInstance().reset();
-        IntakeSubsystem.getInstance().reset();
-        ShooterSubsystem.getInstance().reset();
     }
 }

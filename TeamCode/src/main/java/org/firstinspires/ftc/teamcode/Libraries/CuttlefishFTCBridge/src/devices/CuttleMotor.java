@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.utils.Direction;
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
+import org.firstinspires.ftc.teamcode.Libraries.JeruLib.MMRobot;
 
 
 /**
@@ -41,7 +41,7 @@ public class CuttleMotor {
      * @param power the power to set the motor to between -1 to 1
      */
     public void setPower(double power) {
-        this.power = power / JeruRobot.getInstance().battery.getVoltage() * nominalVoltage;
+        this.power = power / MMRobot.getInstance().battery.getVoltage() * nominalVoltage;
 
         if (!interlaced) {
             sendPower();

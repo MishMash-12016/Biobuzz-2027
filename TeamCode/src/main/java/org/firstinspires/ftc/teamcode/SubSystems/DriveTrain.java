@@ -16,12 +16,11 @@ import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
+import org.firstinspires.ftc.teamcode.Libraries.JeruLib.MMRobot;
 
 import java.util.function.DoubleSupplier;
 
 public class DriveTrain extends SubsystemBase {
-    private static DriveTrain instance;
     static double[][] transformationMatrix = {
             {1, 1, 1}, //frontLeft
             {-1, 1, 1}, //backLeft
@@ -37,21 +36,13 @@ public class DriveTrain extends SubsystemBase {
     private final double slowmodeMultiplayer = 0.3;
     private final double slowmodeYawMultiplayer = 0.3;
 
-
-    public static synchronized DriveTrain getInstance() {
-        if (instance == null) {
-            instance = new DriveTrain();
-        }
-        return instance;
-    }
-
-    private DriveTrain() {
+    public DriveTrain() {
         super(); //register this subsystem, in order to schedule default command later on.
 
-        motorFL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "FL");//2
-        motorBL = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "BL");//1
-        motorBR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "BR");//3
-        motorFR = JeruRobot.getInstance().hardwareMap.get(DcMotorEx.class, "FR");//0
+        motorFL = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "FL");//2
+        motorBL = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "BL");//1
+        motorBR = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "BR");//3
+        motorFR = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "FR");//0
 
         motorFL.setDirection(DcMotorEx.Direction.REVERSE);
         motorBL.setDirection(DcMotorEx.Direction.REVERSE);
@@ -63,11 +54,6 @@ public class DriveTrain extends SubsystemBase {
 
         //TODO: reverse motors
     }
-
-    public void reset() {
-        instance = null;
-    }
-
     public void activeFL(double pow) { motorFL.setPower(pow); }
     public void activeBL(double pow){
         motorBL.setPower(pow);
@@ -80,7 +66,7 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void setYaw(double lastAngle){
-        JeruRobot.getInstance().localizer.setHeading(lastAngle, AngleUnit.DEGREES);
+        MMRobot.getInstance().localizer.setHeading(lastAngle, AngleUnit.DEGREES);
     }
 
 
@@ -122,7 +108,7 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void resetYaw() {
-        JeruRobot.getInstance().localizer.setHeading(0, AngleUnit.DEGREES);
+        MMRobot.getInstance().localizer.setHeading(0, AngleUnit.DEGREES);
     }
     public Command resetYawCommand(){
         return new InstantCommand(this::resetYaw);
@@ -130,7 +116,7 @@ public class DriveTrain extends SubsystemBase {
     private void fieldOrientedDrive(double x, double y, double yaw) {
         Vector2d joystickDirection = new Vector2d(x, y);
         Vector2d fieldOrientedVector = joystickDirection.rotateBy(
-                JeruRobot.getInstance().startAngle-JeruRobot.getInstance().localizer.getHeading(AngleUnit.DEGREES));//TODO:check
+                MMRobot.getInstance().startAngle- MMRobot.getInstance().localizer.getHeading(AngleUnit.DEGREES));//TODO:check
         drive(fieldOrientedVector.getX(), fieldOrientedVector.getY(), yaw);
     }
 
@@ -139,16 +125,16 @@ public class DriveTrain extends SubsystemBase {
     }
     public Command fieldOrientedDriveCommand() {
         return fieldOrientedDriveCommand(
-                () -> Math.pow(JeruRobot.getInstance().gamepadEx1.getLeftX(), 3),
-                () -> Math.pow(JeruRobot.getInstance().gamepadEx1.getLeftY(), 3),
-                () -> Math.pow(JeruRobot.getInstance().gamepadEx1.getRightX(), 3)
+                () -> Math.pow(MMRobot.getInstance().gamepadEx1.getLeftX(), 3),
+                () -> Math.pow(MMRobot.getInstance().gamepadEx1.getLeftY(), 3),
+                () -> Math.pow(MMRobot.getInstance().gamepadEx1.getRightX(), 3)
         );
     }
     public Command slowmodeFieldOrientedDriveCommand() {
         return slowmodeFieldOrientedDriveCommand(
-                () -> JeruRobot.getInstance().gamepadEx1.getLeftX(),
-                () -> JeruRobot.getInstance().gamepadEx1.getLeftY(),
-                () -> JeruRobot.getInstance().gamepadEx1.getRightX()
+                () -> MMRobot.getInstance().gamepadEx1.getLeftX(),
+                () -> MMRobot.getInstance().gamepadEx1.getLeftY(),
+                () -> MMRobot.getInstance().gamepadEx1.getRightX()
         );
     }
     public Command slowmodeFieldOrientedDriveCommand(DoubleSupplier x, DoubleSupplier y, DoubleSupplier yaw) {

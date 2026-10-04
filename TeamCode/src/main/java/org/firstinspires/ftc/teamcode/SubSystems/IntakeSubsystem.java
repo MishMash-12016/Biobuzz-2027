@@ -1,27 +1,19 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.utils.Direction;
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.JeruRobot;
+import org.firstinspires.ftc.teamcode.Libraries.JeruLib.MMRobot;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private final CuttleMotor intakeMotor;
-    private static IntakeSubsystem instance;
+    private final DcMotorEx intakeMotor;
 
-    public static synchronized IntakeSubsystem getInstance() {
-        if (instance == null) {
-            instance = new IntakeSubsystem();
-        }
-        return instance;
-    }
-
-    private IntakeSubsystem() {
-        intakeMotor = new CuttleMotor(JeruRobot.getInstance().expansionHub, 0);
-        intakeMotor.setDirection(Direction.REVERSE);
+    public IntakeSubsystem() {
+        intakeMotor = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "intake");
+        intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     private void setPower(double power) {
@@ -30,8 +22,5 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public Command setPowerCommand(double power) {
         return new InstantCommand(() -> setPower(power),this);
-    }
-    public void reset() {
-        instance = null;
     }
 }
