@@ -21,8 +21,8 @@ public abstract class MMOpMode extends CommandOpMode {
                 MMRobot.getInstance().opModeType != OpModeType.EXPERIMENTING_NO_EXPANSION_NO_SERVOHUB){
             MMRobot.getInstance().expansionHub.pullBulkData();
         }
-        MMRobot.getInstance().localizer.update();
-
+//        MMRobot.getInstance().localizer.update();
+        MMRobot.getInstance().driveTrain.updateFollower();
         //fieldOverlay dashboard
         TelemetryPacket packet = new TelemetryPacket();
         packet.fieldOverlay().setStroke("#3F51B5");

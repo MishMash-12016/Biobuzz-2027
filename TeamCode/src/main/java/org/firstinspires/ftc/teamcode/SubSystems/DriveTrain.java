@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 
+import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.seattlesolvers.solverslib.command.Command;
@@ -17,6 +18,7 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMRobot;
+import org.firstinspires.ftc.teamcode.Libraries.pedroPathing.Constants;
 
 import java.util.function.DoubleSupplier;
 
@@ -36,6 +38,8 @@ public class DriveTrain extends SubsystemBase {
     private final double slowmodeMultiplayer = 0.3;
     private final double slowmodeYawMultiplayer = 0.3;
 
+    private static Follower follower;
+
     public DriveTrain() {
         super(); //register this subsystem, in order to schedule default command later on.
 
@@ -52,7 +56,13 @@ public class DriveTrain extends SubsystemBase {
         motorFR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorBR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //TODO: reverse motors
+        follower = Constants.createFollower(MMRobot.getInstance().hardwareMap);
+    }
+    public Follower getFollower() {
+        return follower;
+    }
+    public void updateFollower(){
+        follower.update();
     }
     public void activeFL(double pow) { motorFL.setPower(pow); }
     public void activeBL(double pow){

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.TeleOP;
+package org.firstinspires.ftc.teamcode.OpMode.TeleOP;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.button.Trigger;
@@ -21,7 +21,7 @@ public class manualDrive extends MMOpMode {
         robotInstance.initJeruRobot()
                 .angle(0)
                 .allianceColor(AllianceColor.BLUE)
-                .opModeType(OpModeType.TELEOP)
+                .opModeType(OpModeType.EXPERIMENTING_NO_EXPANSION_NO_SERVOHUB)
                 .build(this);
 
         //Drive
@@ -32,14 +32,14 @@ public class manualDrive extends MMOpMode {
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.OPTIONS).whenPressed(
                 MMRobot.getInstance().driveTrain.resetYawCommand()
         );
-
-        new Trigger(() -> MMRobot.getInstance().gamepadEx1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.05).whileActiveContinuous(
-                MMRobot.getInstance().intakeSubsystem.setPowerCommand(-1)
-        ).whenInactive(MMRobot.getInstance().intakeSubsystem.setPowerCommand(0));
-
-        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
-                MMRobot.getInstance().intakeSubsystem.setPowerCommand(1)
-        ).whenReleased(MMRobot.getInstance().intakeSubsystem.setPowerCommand(0));
+//
+//        new Trigger(() -> MMRobot.getInstance().gamepadEx1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.05).whileActiveContinuous(
+//                MMRobot.getInstance().intakeSubsystem.setPowerCommand(-1)
+//        ).whenInactive(MMRobot.getInstance().intakeSubsystem.setPowerCommand(0));
+//
+//        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
+//                MMRobot.getInstance().intakeSubsystem.setPowerCommand(1)
+//        ).whenReleased(MMRobot.getInstance().intakeSubsystem.setPowerCommand(0));
 
 //        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whileHeld(
 //                new RunCommand(()->JeruRobot.getInstance().driveTrain.activeFL(1))

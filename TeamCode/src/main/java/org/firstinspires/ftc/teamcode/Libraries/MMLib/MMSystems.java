@@ -72,8 +72,8 @@ public class MMSystems {
     }
     private void initSubsystems(){
         this.driveTrain = new DriveTrain();
-        this.intakeSubsystem = new IntakeSubsystem();
-        this.shooterSubsystem = new ShooterSubsystem();
+//        this.intakeSubsystem = new IntakeSubsystem();
+//        this.shooterSubsystem = new ShooterSubsystem();
     }
     private void initLocalize(Pose currentPose) {
         localizer = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
@@ -86,7 +86,7 @@ public class MMSystems {
 
     protected void initJeruSystems(OpMode opMode) {
         initSystems(opMode);
-        if (MMRobot.getInstance().initDriveTrain) {
+        if (MMRobot.getInstance().initDriveTrain && MMRobot.getInstance().opModeType != OpModeType.AUTO) {
             initDriveTrainDefaultCommand();
         }
         initLocalize(new Pose(0,0,0));
