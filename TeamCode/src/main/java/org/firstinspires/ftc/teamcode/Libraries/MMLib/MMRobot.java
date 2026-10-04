@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.Libraries.JeruLib;
+package org.firstinspires.ftc.teamcode.Libraries.MMLib;
 
 import static com.qualcomm.robotcore.util.RobotLog.a;
 import static com.qualcomm.robotcore.util.RobotLog.d;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.AllianceColor;
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.AllianceColor;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.OpModeType;
 
 
 public class MMRobot extends MMSystems {

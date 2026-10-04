@@ -5,10 +5,10 @@ import com.seattlesolvers.solverslib.command.button.Trigger;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.MMOpMode;
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.MMRobot;
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.AllianceColor;
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMOpMode;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMRobot;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.AllianceColor;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.OpModeType;
 
 @TeleOp
 public class manualDrive extends MMOpMode {

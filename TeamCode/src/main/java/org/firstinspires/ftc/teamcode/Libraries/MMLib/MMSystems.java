@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Libraries.JeruLib;
+package org.firstinspires.ftc.teamcode.Libraries.MMLib;
 
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleRevHub;
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.OpModeType;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.SubSystems.IntakeSubsystem;

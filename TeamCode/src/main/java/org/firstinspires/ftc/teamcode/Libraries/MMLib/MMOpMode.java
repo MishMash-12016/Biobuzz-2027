@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.Libraries.JeruLib;
+package org.firstinspires.ftc.teamcode.Libraries.MMLib;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils.OpModeType;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.OpModeType;
 //import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.Drawing;
 
 

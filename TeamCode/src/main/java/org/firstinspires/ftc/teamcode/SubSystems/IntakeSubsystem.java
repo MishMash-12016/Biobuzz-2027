@@ -6,7 +6,7 @@ import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.MMRobot;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMRobot;
 
 public class IntakeSubsystem extends SubsystemBase {
     private final DcMotorEx intakeMotor;

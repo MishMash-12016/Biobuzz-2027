@@ -6,7 +6,7 @@ import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.controller.PIDFController;
 
-import org.firstinspires.ftc.teamcode.Libraries.JeruLib.MMRobot;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMRobot;
 
 public class ShooterSubsystem extends SubsystemBase {
     private final DcMotorEx shooterMotor;

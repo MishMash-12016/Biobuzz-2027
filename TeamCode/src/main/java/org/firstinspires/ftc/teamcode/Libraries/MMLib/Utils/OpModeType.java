@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Libraries.JeruLib.Utils;
+package org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils;
 
 public enum OpModeType {
     TELEOP,
