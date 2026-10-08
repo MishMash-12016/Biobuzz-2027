@@ -16,6 +16,8 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.OpModeType;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.SubSystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.SubSystems.Limelight;
+import org.firstinspires.ftc.teamcode.SubSystems.TransferSubsystem;
 
 public class MMSystems {
     private final String controlHubName = "Control Hub";
@@ -36,8 +38,10 @@ public class MMSystems {
     public GoBildaPinpointDriver localizer;
 
     public IntakeSubsystem intakeSubsystem;
+    public TransferSubsystem transferSubsystem;
     public ShooterSubsystem shooterSubsystem;
     public DriveTrain driveTrain;
+    public Limelight limelight;
 
     private void initDriveTrainDefaultCommand() {
         MMRobot.getInstance().driveTrain.setDefaultCommand(
@@ -73,7 +77,9 @@ public class MMSystems {
     private void initSubsystems(){
         this.driveTrain = new DriveTrain();
 //        this.intakeSubsystem = new IntakeSubsystem();
+//        this.transferSubsystem = new transferSubsystem();
 //        this.shooterSubsystem = new ShooterSubsystem();
+        this.limelight = new Limelight();
     }
     private void initLocalize(Pose currentPose) {
         localizer = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");

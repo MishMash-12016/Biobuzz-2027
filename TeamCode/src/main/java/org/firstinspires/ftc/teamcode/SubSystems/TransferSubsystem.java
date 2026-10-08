@@ -8,22 +8,22 @@ import com.seattlesolvers.solverslib.command.SubsystemBase;
 
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMRobot;
 
-public class IntakeSubsystem extends SubsystemBase {
-    private final DcMotorEx intakeMotor;
+public class TransferSubsystem extends SubsystemBase {
+    private final DcMotorEx transferMotor;
 
-    public IntakeSubsystem() {
-        intakeMotor = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "intake");
-        intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+    public TransferSubsystem() {
+        transferMotor = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "transfer");
+        transferMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     private void setPower(double power) {
-        intakeMotor.setPower(power);
+        transferMotor.setPower(power);
     }
 
     public Command setPowerCommand(double power) {
-        return new InstantCommand(() -> setPower(power),this);
+        return new InstantCommand(() -> setPower(power), this);
     }
     public Command stopCommand() {
-        return new InstantCommand(() -> setPower(0),this);
+        return new InstantCommand(() -> setPower(0), this);
     }
 }

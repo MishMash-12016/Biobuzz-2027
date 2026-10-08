@@ -9,15 +9,14 @@ import com.seattlesolvers.solverslib.hardware.motors.Motor.Encoder;
 
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMRobot;
 
-import java.util.Base64;
-
 public class ShooterSubsystem extends SubsystemBase {
     private final DcMotorEx shooterMotor;
     private final Encoder shooterEncoder;
     // how many ticks is one motor rotation
     private final double EncoderResolution = 28;
     // how many motor rotation is one flywil rotation
-    private final double girRatio = 1; // TODO: find the gir ratio
+    private final double girRatio = 25/18;
+    // todo: 8/10/26
     private final double kP = 0;
     private final double kI = 0;
     private final double kD = 0;
@@ -30,12 +29,12 @@ public class ShooterSubsystem extends SubsystemBase {
     private void setPower(double power) {
         shooterMotor.setPower(power);
     }
-
-    public Command setPowerCommand(double power) {
-        return new InstantCommand(() -> setPower(power),this);
-    }
     public double getVel() {
         return (shooterEncoder.getPosition()/EncoderResolution)/girRatio;
+    }
+
+        public Command setPowerCommand(double power) {
+        return new InstantCommand(() -> setPower(power),this);
     }
     public Command getToVelocity(double vel) {
         return setPowerCommand(pidf.calculate(getVel(), vel));
