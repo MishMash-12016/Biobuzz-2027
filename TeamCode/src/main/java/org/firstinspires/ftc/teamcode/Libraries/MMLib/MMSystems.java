@@ -5,6 +5,7 @@ import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.qualcomm.robotcore.util.RobotLog;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -76,9 +77,21 @@ public class MMSystems {
     }
     private void initSubsystems(){
         this.driveTrain = new DriveTrain();
-//        this.intakeSubsystem = new IntakeSubsystem();
-//        this.transferSubsystem = new transferSubsystem();
-//        this.shooterSubsystem = new ShooterSubsystem();
+        try {
+            this.intakeSubsystem = new IntakeSubsystem();
+        } catch (Exception e) {
+            RobotLog.ww("MMSystems", "Failed to init intakeSubsystem: " + e.getMessage());
+        }
+        try {
+            this.transferSubsystem = new TransferSubsystem();
+        } catch (Exception e) {
+            RobotLog.ww("MMSystems", "Failed to init transferSubsystem: " + e.getMessage());
+        }
+        try {
+            this.shooterSubsystem = new ShooterSubsystem();
+        } catch (Exception e) {
+            RobotLog.ww("MMSystems", "Failed to init shooterSubsystem: " + e.getMessage());
+        }
         this.limelight = new Limelight();
     }
     private void initLocalize(Pose currentPose) {

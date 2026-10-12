@@ -13,7 +13,7 @@ public class TransferSubsystem extends SubsystemBase {
 
     public TransferSubsystem() {
         transferMotor = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "transfer");
-        transferMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        transferMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     private void setPower(double power) {

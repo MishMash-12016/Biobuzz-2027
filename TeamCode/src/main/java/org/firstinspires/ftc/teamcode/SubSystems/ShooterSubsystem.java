@@ -9,8 +9,11 @@ import com.seattlesolvers.solverslib.hardware.motors.Motor.Encoder;
 
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMRobot;
 
+import java.util.function.DoubleSupplier;
+
 public class ShooterSubsystem extends SubsystemBase {
-    private final DcMotorEx shooterMotor;
+    private final DcMotorEx shooterMotorL;
+    private final DcMotorEx shooterMotorR;
     private final Encoder shooterEncoder;
     // how many ticks is one motor rotation
     private final double EncoderResolution = 28;
@@ -23,18 +26,33 @@ public class ShooterSubsystem extends SubsystemBase {
     private final double kF = 0;
     PIDFController pidf = new PIDFController(kP, kI, kD, kF);
     public ShooterSubsystem() {
-        shooterMotor = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "shooterMotor");
-        shooterEncoder = MMRobot.getInstance().hardwareMap.get(Encoder.class,"shooterEncoder");
+        shooterMotorL = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "shooterMotorL");
+        shooterMotorR = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "shooterMotorR");
+
+//        shooterMotorR.setDirection(DcMotorEx.Direction.REVERSE);
+        shooterMotorL.setDirection(DcMotorEx.Direction.REVERSE);
+
+        Encoder enc = null;
+        try {
+            enc = MMRobot.getInstance().hardwareMap.get(Encoder.class, "shooterEncoder");
+        } catch (Exception ignored) {
+        }
+        shooterEncoder = enc;
     }
     private void setPower(double power) {
-        shooterMotor.setPower(power);
+        shooterMotorL.setPower(power);
+        shooterMotorR.setPower(power);
     }
     public double getVel() {
+        if (shooterEncoder == null) return 0.0;
         return (shooterEncoder.getPosition()/EncoderResolution)/girRatio;
     }
 
         public Command setPowerCommand(double power) {
         return new InstantCommand(() -> setPower(power),this);
+    }
+    public Command setPowerCommand(DoubleSupplier power) {
+        return new InstantCommand(() -> setPower(power.getAsDouble()),this);
     }
     public Command getToVelocity(double vel) {
         return setPowerCommand(pidf.calculate(getVel(), vel));
