@@ -1,8 +1,14 @@
 package org.firstinspires.ftc.teamcode.OpMode.TeleOp;
 
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.LLResultTypes;
+import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.sun.tools.javac.util.List;
+
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 /**
  * Dedicated test OpMode for Limelight 3A.
@@ -18,7 +24,7 @@ public class LimelightTestOpMode extends LinearOpMode {
     private boolean lastDpadDown = false;
 
     @Override
-    public void runOpMode() {/*
+    public void runOpMode() {
         telemetry.addLine("Initializing Limelight 3A...");
         telemetry.update();
 
@@ -81,7 +87,7 @@ public class LimelightTestOpMode extends LinearOpMode {
                 telemetry.addLine("Set pipeline to 'Fiducial Markers' in Limelight Web UI (http://192.168.43.1:5807)");
             }
 
-            List<LLResultTypes.FiducialResult> fiducials = (result != null) ? result.getFiducialResults() : null;
+            List<LLResultTypes.FiducialResult> fiducials = (result != null) ? (List<LLResultTypes.FiducialResult>) result.getFiducialResults() : null;
             boolean hasFiducials = fiducials != null && !fiducials.isEmpty();
 
             telemetry.addLine("\n=== TARGET DATA ===");
@@ -104,10 +110,10 @@ public class LimelightTestOpMode extends LinearOpMode {
                 }
 
                 // Object detection / ML
-                List<LLResultTypes.DetectorResult> detectors = result.getDetectorResults();
+                List<LLResultTypes.DetectorResult> detectors = (List<LLResultTypes.DetectorResult>) result.getDetectorResults();
                 if (detectors != null && !detectors.isEmpty()) {
                     telemetry.addLine("\n--- Detectors ---");
-                    for (LLResultTypes.DetectorResult det : detectors) {;   1
+                    for (LLResultTypes.DetectorResult det : detectors) {;
                         telemetry.addData("Detector (" + det.getClassName() + ")",
                                 "Conf: %.1f%% | X: %.2f deg | Y: %.2f deg",
                                 det.getConfidence() * 100.0, det.getTargetXDegrees(), det.getTargetYDegrees());
@@ -131,6 +137,6 @@ public class LimelightTestOpMode extends LinearOpMode {
 
         if (limelight != null) {
             limelight.stop();
-        }*/
+        }
     }
 }

@@ -2,14 +2,11 @@ package org.firstinspires.ftc.teamcode.OpMode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.InstantCommand;
-import com.seattlesolvers.solverslib.command.RunCommand;
-import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import com.seattlesolvers.solverslib.command.button.Trigger;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.Commands.intakeCommandGroup;
-import org.firstinspires.ftc.teamcode.Commands.shootCommandGroup;
+import org.firstinspires.ftc.teamcode.Commands.IntakeCommandGroup;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMOpMode;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMRobot;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.AllianceColor;
@@ -42,7 +39,7 @@ public class manualDrive extends MMOpMode {
 
 
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
-                intakeCommandGroup.basicFeed()
+                IntakeCommandGroup.basicFeed()
         );
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
                 new InstantCommand(()->up())
