@@ -20,16 +20,21 @@ public class TestOpMode extends MMOpMode {
     public void initialize() {
         robotInstance = MMRobot.getInstance();
         robotInstance.initJeruRobot()
-                .angle(0)
+                .angle(90)// TODO -> change
                 .allianceColor(AllianceColor.BLUE)
                 .opModeType(OpModeType.EXPERIMENTING_NO_SERVOHUB)
                 .build(this);
+
+        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.OPTIONS).whenPressed(
+                ()-> robotInstance.driveTrain.setYaw(0)
+        );
         
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenActive(
                 IntakeCommandGroup.basicFeed()
         ).whenInactive(
                 IntakeCommandGroup.stopIntake()
         );
+
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).toggleWhenActive(
                 robotInstance.shooterSubsystem.setPowerCommand(1)
         ).whenInactive(
@@ -38,13 +43,13 @@ public class TestOpMode extends MMOpMode {
         new Trigger(() -> robotInstance.gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.05).whenActive(
                 ShootCommandGroup.shootAll()
         );
-
-
         new Trigger();
     }
 
     @Override
     public void run() {
+        telemetry.addData("yaw",Math.toDegrees(robotInstance.driveTrain.getFollower().getPose().getHeading()));
+        telemetry.update();
         super.run();
     }
 }

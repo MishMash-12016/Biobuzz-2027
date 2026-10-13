@@ -11,6 +11,7 @@ public class ShootCommandGroup {
                 MMRobot.getInstance().intakeSubsystem.setPowerCommand(1),
                 MMRobot.getInstance().transferSubsystem.setPowerCommand(1)
         );
+
     }
 
 }

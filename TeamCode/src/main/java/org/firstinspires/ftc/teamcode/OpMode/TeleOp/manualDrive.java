@@ -16,16 +16,14 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.OpModeType;
 public class manualDrive extends MMOpMode {
 
     public MMRobot robotInstance;
-    private static double shooterpower;
 
     @Override
     public void initialize() {
-        shooterpower = 1;
         robotInstance = MMRobot.getInstance();
         robotInstance.initJeruRobot()
                 .angle(0)
                 .allianceColor(AllianceColor.BLUE)
-                .opModeType(OpModeType.EXPERIMENTING_NO_EXPANSION_NO_SERVOHUB)
+                .opModeType(OpModeType.EXPERIMENTING_NO_SERVOHUB)
                 .build(this);
 
         //Drive
@@ -38,29 +36,13 @@ public class manualDrive extends MMOpMode {
         );
 
 
-        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
-                IntakeCommandGroup.basicFeed()
-        );
-        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
-                new InstantCommand(()->up())
-        );
-        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
-                new InstantCommand(()->down())
-        );
+
     }
 
-    private static void up() {
-        shooterpower += 0.1;
-    }
-    private static void down() {
-        shooterpower -= 0.1;
-    }
     @Override
     public void run() {
         super.run();
-        robotInstance.shooterSubsystem.setPowerCommand(shooterpower).schedule();
         telemetry.addData("head", MMRobot.getInstance().localizer.getHeading(AngleUnit.DEGREES));
-        telemetry.addData("shooterPower", shooterpower);
         if (MMRobot.getInstance().limelight != null) {
             MMRobot.getInstance().limelight.updateTelemetry(telemetry);
         }

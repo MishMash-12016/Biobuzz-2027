@@ -77,6 +77,7 @@ public class DriveTrain extends SubsystemBase {
 
     public void setYaw(double lastAngle){
         MMRobot.getInstance().localizer.setHeading(lastAngle, AngleUnit.DEGREES);
+
     }
 
 
