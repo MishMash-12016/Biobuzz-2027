@@ -19,4 +19,10 @@ public class IntakeCommandGroup {
                 MMRobot.getInstance().transferSubsystem.setPowerCommand(0)
         );
     }
+    public static Command outIntake() {
+        return new ParallelCommandGroup(
+                MMRobot.getInstance().intakeSubsystem.setPowerCommand(-1),
+                MMRobot.getInstance().transferSubsystem.setPowerCommand(-1)
+        );
+    }
 }

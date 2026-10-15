@@ -13,7 +13,7 @@ public abstract class MMOpMode extends CommandOpMode {
     public abstract void initialize();
 
     @Override
-    public void run() {
+    public void run () {
         super.run();
         //get sensors data
         MMRobot.getInstance().controlHub.pullBulkData();

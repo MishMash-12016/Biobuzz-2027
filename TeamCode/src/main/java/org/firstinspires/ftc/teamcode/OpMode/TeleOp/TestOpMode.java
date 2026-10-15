@@ -35,6 +35,12 @@ public class TestOpMode extends MMOpMode {
                 IntakeCommandGroup.stopIntake()
         );
 
+        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenActive(
+                IntakeCommandGroup.outIntake()
+        ).whenInactive(
+                IntakeCommandGroup.stopIntake()
+        );
+
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).toggleWhenActive(
                 robotInstance.shooterSubsystem.setPowerCommand(1)
         ).whenInactive(
@@ -42,8 +48,7 @@ public class TestOpMode extends MMOpMode {
         );
         new Trigger(() -> robotInstance.gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.05).whenActive(
                 ShootCommandGroup.shootAll()
-        );
-        new Trigger();
+        ).whenInactive(IntakeCommandGroup.stopIntake());
     }
 
     @Override

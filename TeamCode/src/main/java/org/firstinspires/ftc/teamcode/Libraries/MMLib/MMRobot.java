@@ -49,7 +49,7 @@ public class MMRobot extends MMSystems {
         private OpModeType opModeType = OpModeType.TELEOP;
         private AllianceColor allianceColor = AllianceColor.RED;
         private boolean initDriveTrain = true;
-        private int startAngle = 0;
+        private int  startAngle = 0;
 
         public Builder opModeType(OpModeType opModeType) {
             this.opModeType = opModeType;
