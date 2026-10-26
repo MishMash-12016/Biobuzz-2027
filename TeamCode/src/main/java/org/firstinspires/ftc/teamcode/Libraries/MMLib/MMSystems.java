@@ -18,6 +18,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.SubSystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.SubSystems.Limelight;
+import org.firstinspires.ftc.teamcode.SubSystems.StopperSubsystem;
 import org.firstinspires.ftc.teamcode.SubSystems.TransferSubsystem;
 
 public class MMSystems {
@@ -41,6 +42,7 @@ public class MMSystems {
     public IntakeSubsystem intakeSubsystem;
     public TransferSubsystem transferSubsystem;
     public ShooterSubsystem shooterSubsystem;
+    public StopperSubsystem stopperSubsystem;
     public DriveTrain driveTrain;
     public Limelight limelight;
 
@@ -91,6 +93,11 @@ public class MMSystems {
             this.shooterSubsystem = new ShooterSubsystem();
         } catch (Exception e) {
             RobotLog.ww("MMSystems", "Failed to init shooterSubsystem: " + e.getMessage());
+        }
+        try {
+            this.stopperSubsystem = new StopperSubsystem();
+        } catch (Exception e) {
+            RobotLog.ww("MMSystems", "Failed to init stopperSubsystem: " + e.getMessage());
         }
         this.limelight = new Limelight();
     }

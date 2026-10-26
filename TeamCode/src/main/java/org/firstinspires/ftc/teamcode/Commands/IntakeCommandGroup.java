@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMRobot;
 public class IntakeCommandGroup {
     public static Command basicFeed() {
         return new ParallelCommandGroup(
+                MMRobot.getInstance().stopperSubsystem.close(),
                 MMRobot.getInstance().intakeSubsystem.setPowerCommand(1),
                 MMRobot.getInstance().transferSubsystem.setPowerCommand(1)
         );
