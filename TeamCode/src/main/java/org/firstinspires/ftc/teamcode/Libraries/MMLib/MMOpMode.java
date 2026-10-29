@@ -22,7 +22,7 @@ public abstract class MMOpMode extends CommandOpMode {
             MMRobot.getInstance().expansionHub.pullBulkData();
         }
 //        MMRobot.getInstance().localizer.update();
-        MMRobot.getInstance().driveTrain.updateFollower();
+        MMRobot.getInstance().driveTrain.update();
         //fieldOverlay dashboard
         TelemetryPacket packet = new TelemetryPacket();
         packet.fieldOverlay().setStroke("#3F51B5");

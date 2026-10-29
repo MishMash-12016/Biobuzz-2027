@@ -20,9 +20,9 @@ public class ShooterSubsystem extends SubsystemBase {
     // how many motor rotation is one flywil rotation
     private final double girRatio = 25/18;
     // todo: 8/10/26
-    private final double kP = 0;
-    private final double kI = 0;
-    private final double kD = 0;
+    public static double kP = 0;
+    public static double kI = 0;
+    public static double kD = 0;
     private final double kF = 0;
     PIDFController pidf = new PIDFController(kP, kI, kD, kF);
     public ShooterSubsystem() {
@@ -30,7 +30,7 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterMotorR = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "shooterMotorR");
 
 //        shooterMotorR.setDirection(DcMotorEx.Direction.REVERSE);
-        shooterMotorL.setDirection(DcMotorEx.Direction.REVERSE);
+        shooterMotorR.setDirection(DcMotorEx.Direction.REVERSE);
 
         Encoder enc = null;
         try {

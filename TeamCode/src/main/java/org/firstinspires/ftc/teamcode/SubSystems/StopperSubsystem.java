@@ -14,7 +14,7 @@ import java.util.function.DoubleSupplier;
 public class StopperSubsystem extends SubsystemBase {
     private final Servo stopperServo;
 
-    private final double open = 0.1;
+    private final double open = 0.8;
     private final double close = 0.0;
     public StopperSubsystem() {
         stopperServo = MMRobot.getInstance().hardwareMap.get(Servo.class, "stopperServo");

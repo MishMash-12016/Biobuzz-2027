@@ -13,7 +13,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public IntakeSubsystem() {
         intakeMotor = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "intake");
-        intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     private void setPower(double power) {

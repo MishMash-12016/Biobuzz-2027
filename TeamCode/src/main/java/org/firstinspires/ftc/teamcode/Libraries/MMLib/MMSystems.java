@@ -46,12 +46,6 @@ public class MMSystems {
     public DriveTrain driveTrain;
     public Limelight limelight;
 
-    private void initDriveTrainDefaultCommand() {
-        MMRobot.getInstance().driveTrain.setDefaultCommand(
-                MMRobot.getInstance().driveTrain.fieldOrientedDriveCommand());
-
-    }
-
     private void initSystems(OpMode opMode) {
         //TODO:may need to change name based on your control and expansion hubs name
         this.controlHub = new CuttleRevHub(hardwareMap, controlHubName);
@@ -112,9 +106,6 @@ public class MMSystems {
 
     protected void initJeruSystems(OpMode opMode) {
         initSystems(opMode);
-        if (MMRobot.getInstance().initDriveTrain && MMRobot.getInstance().opModeType != OpModeType.AUTO) {
-            initDriveTrainDefaultCommand();
-        }
         initLocalize(new Pose(0,0,0));
     }
 }

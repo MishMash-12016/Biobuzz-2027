@@ -15,6 +15,8 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.OpModeType;
 @TeleOp
 public class TestOpMode extends MMOpMode {
     public MMRobot robotInstance;
+    protected boolean slow = false;
+
 
     @Override
     public void initialize() {
@@ -25,8 +27,11 @@ public class TestOpMode extends MMOpMode {
                 .opModeType(OpModeType.EXPERIMENTING_NO_SERVOHUB)
                 .build(this);
 
+        robotInstance.driveTrain.enableTeleopDrive(()->slow);
+        robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(() -> slow = !slow);
+
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.OPTIONS).whenPressed(
-                ()-> robotInstance.driveTrain.setYaw(0)
+                ()-> robotInstance.driveTrain.resetYaw()
         );
         
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenActive(
@@ -40,6 +45,10 @@ public class TestOpMode extends MMOpMode {
         ).whenInactive(
                 IntakeCommandGroup.stopIntake()
         );
+
+        // The error at the time of the second-most-recent call to calculate() (used to compute error
+        // rate)
+
 
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).toggleWhenActive(
                 robotInstance.shooterSubsystem.setPowerCommand(1)
@@ -57,4 +66,6 @@ public class TestOpMode extends MMOpMode {
         telemetry.update();
         super.run();
     }
+
+
 }

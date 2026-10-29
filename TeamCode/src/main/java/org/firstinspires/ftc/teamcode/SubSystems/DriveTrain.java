@@ -5,183 +5,145 @@ package org.firstinspires.ftc.teamcode.SubSystems;
 import com.acmerobotics.dashboard.FtcDashboard;
 
 import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.seattlesolvers.solverslib.command.Command;
+import com.seattlesolvers.solverslib.command.CommandBase;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.RunCommand;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
+import com.seattlesolvers.solverslib.controller.PIDController;
 import com.seattlesolvers.solverslib.geometry.Vector2d;
 
-import org.apache.commons.math3.linear.MatrixUtils;
-import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.linear.RealVector;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMRobot;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Libraries.pedroPathing.Constants;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-public class DriveTrain extends SubsystemBase {
-    static double[][] transformationMatrix = {
-            {1, 1, 1}, //frontLeft
-            {-1, 1, 1}, //backLeft
-            {-1, 1, -1}, //frontRight
-            {1, 1, -1} //backRight
-    };
+public class DriveTrain extends SubsystemBase{
 
-    private final DcMotorEx motorFR;
-    private final DcMotorEx motorFL;
-    private final DcMotorEx motorBL;
-    private final DcMotorEx motorBR;
+    public double slowModeRatioForward = 0.3;
+    public double slowModeRatioLateral = 0.3;
+    public double slowModeRatioRotation = 0.2;
 
-    private final double slowmodeMultiplayer = 0.3;
-    private final double slowmodeYawMultiplayer = 0.3;
+    public PIDController headingPID;
+    public static double headingKP = 0.0;
+    public static double headingKI = 0.0;
+    public static double headingKD = 0.0;
+    public static double headingKS = 0.0;
+
+
+    public PIDController secondaryHeadingPID;
+    public static double secondaryHeadingKP = 0.0;
+    public static double secondaryHeadingKI = 0.0;
+    public static double secondaryHeadingKD = 0.0;
+    public static double secondaryHeadingKS = 0.0;
+
+    public static double headingTolerance = 0.50;
+    public static double switchToSecondaryHeading = 10;
+
+    private double headingPIDPower;
+    private double secondaryHeadingPIDPower;
+
 
     private static Follower follower;
 
-    public DriveTrain() {
-        super(); //register this subsystem, in order to schedule default command later on.
-
-        motorFL = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "FL");//2
-        motorBL = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "BL");//1
-        motorBR = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "BR");//3
-        motorFR = MMRobot.getInstance().hardwareMap.get(DcMotorEx.class, "FR");//0
-
-        motorFL.setDirection(DcMotorEx.Direction.REVERSE);
-        motorBL.setDirection(DcMotorEx.Direction.REVERSE);
-
-        motorFL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        motorBL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        motorFR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        motorBR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        follower = Constants.createFollower(MMRobot.getInstance().hardwareMap);
-    }
     public Follower getFollower() {
+        if (follower == null) {
+                follower = Constants.createFollower(MMRobot.getInstance().hardwareMap);
+        }
         return follower;
     }
-    public void updateFollower(){
-        follower.update();
-    }
-    public void activeFL(double pow) { motorFL.setPower(pow); }
-    public void activeBL(double pow){
-        motorBL.setPower(pow);
-    }
-    public void activeFR(double pow){
-        motorFR.setPower(pow);
-    }
-    public void activeBR(double pow){
-        motorBR.setPower(pow);
-    }
 
-    public void setYaw(double lastAngle){
-        MMRobot.getInstance().localizer.setHeading(lastAngle, AngleUnit.DEGREES);
-
-    }
-
-
-    private double[] joystickToPower(double x, double y, double yaw) {
-
-        //v = (x, y, yaw)^t (3x1)
-        RealVector joystickVector = MatrixUtils.createRealVector(new double[] {
-                x,
-                y,
-                yaw
-        });
-
-        RealMatrix matrixT = MatrixUtils.createRealMatrix(transformationMatrix); //4x3
-
-        //calculation of the power needed by T constants
-        RealVector powerVector = matrixT.operate(joystickVector); //p = Tv
-
-        double[] powerArray = powerVector.toArray(); //4x1
-
-        //normalize the array
-        for(int i = 0; i < powerArray.length; i++) {
-            powerArray[i] = powerArray[i] / Math.max(Math.abs(x) + Math.abs(y) + Math.abs(yaw), 1);
+    public void update() {
+        if (follower != null) {
+            follower.update();
         }
-
-        return powerArray;
-
     }
 
-    private void setMotorPower(double[] power) {
-        motorFL.setPower(power[0]);
-        motorBL.setPower(power[1]);
-        motorFR.setPower(power[2]);
-        motorBR.setPower(power[3]);
-
-//        updateTelemetry(power);
+    public DriveTrain() {
+        super();
+        follower = Constants.createFollower(MMRobot.getInstance().hardwareMap);
     }
-    public void drive(double x, double y, double yaw) {
-        setMotorPower(joystickToPower(x, y, yaw));
+
+    public CommandBase driveCommand(
+            DoubleSupplier forwardDrive,
+            DoubleSupplier lateralDrive,
+            DoubleSupplier heading,
+            boolean robotCentric,
+            BooleanSupplier slowMode) {
+        return (CommandBase)
+                new RunCommand(
+                        () -> {
+                            double forwardDrivePower = 0;
+                            double lateralDrivePower = 0;
+                            double headingPower = 0;
+
+                            forwardDrivePower = forwardDrive.getAsDouble();
+                            lateralDrivePower = lateralDrive.getAsDouble();
+                            headingPower = heading.getAsDouble();
+
+                            double powerSum =
+                                    Math.max(
+                                            Math.abs(forwardDrivePower)
+                                                    + Math.abs(lateralDrivePower)
+                                                    + Math.abs(headingPower),
+                                            1);
+                            if (powerSum > 1) {
+                                double normalizeTo1 = 1 / powerSum;
+
+                                forwardDrivePower *= normalizeTo1;
+                                lateralDrivePower *= normalizeTo1;
+                                headingPower *= normalizeTo1;
+                            }
+
+                            follower.setTeleOpDrive(
+                                    forwardDrivePower * (slowMode.getAsBoolean() ? slowModeRatioForward : 1),
+                                    lateralDrivePower * (slowMode.getAsBoolean() ? slowModeRatioLateral : 1),
+                                    headingPower * (slowMode.getAsBoolean() ? slowModeRatioRotation : 0.5),
+                                    robotCentric);
+                        }, this)
+                        .beforeStarting(
+                                () -> follower.startTeleopDrive());
     }
 
     public void resetYaw() {
-        MMRobot.getInstance().localizer.setHeading(0, AngleUnit.DEGREES);
-    }
-    public Command resetYawCommand(){
-        return new InstantCommand(this::resetYaw);
-    }
-    private void fieldOrientedDrive(double x, double y, double yaw) {
-        Vector2d joystickDirection = new Vector2d(x, y);
-        Vector2d fieldOrientedVector = joystickDirection.rotateBy(
-                MMRobot.getInstance().startAngle- MMRobot.getInstance().localizer.getHeading(AngleUnit.DEGREES));//TODO:check
-        drive(fieldOrientedVector.getX(), fieldOrientedVector.getY(), yaw);
+        follower.setPose(follower.getPose().setHeading(Math.toRadians(0)));
     }
 
-    public Command fieldOrientedDriveCommand(DoubleSupplier x, DoubleSupplier y, DoubleSupplier yaw) {
-        return new RunCommand(() -> fieldOrientedDrive(x.getAsDouble(),y.getAsDouble(),yaw.getAsDouble()), this);
-    }
-    public Command fieldOrientedDriveCommand() {
-        return fieldOrientedDriveCommand(
-                () -> Math.pow(MMRobot.getInstance().gamepadEx1.getLeftX(), 3),
-                () -> Math.pow(MMRobot.getInstance().gamepadEx1.getLeftY(), 3),
-                () -> Math.pow(MMRobot.getInstance().gamepadEx1.getRightX(), 3)
-        );
-    }
-    public Command slowmodeFieldOrientedDriveCommand() {
-        return slowmodeFieldOrientedDriveCommand(
-                () -> MMRobot.getInstance().gamepadEx1.getLeftX(),
-                () -> MMRobot.getInstance().gamepadEx1.getLeftY(),
-                () -> MMRobot.getInstance().gamepadEx1.getRightX()
-        );
-    }
-    public Command slowmodeFieldOrientedDriveCommand(DoubleSupplier x, DoubleSupplier y, DoubleSupplier yaw) {
-        return fieldOrientedDriveCommand(
-                () -> Math.pow(x.getAsDouble(),5) * slowmodeMultiplayer,
-                () -> Math.pow(y.getAsDouble(),5) * slowmodeMultiplayer,
-                () -> Math.pow(yaw.getAsDouble(),5) * slowmodeYawMultiplayer
+
+    /**
+     * enables the Default Command(the default command is the drive field centric command)
+     */
+    public void enableTeleopDrive(BooleanSupplier slowMode) {
+        MMRobot mmRobot = MMRobot.getInstance();
+        setDefaultCommand(driveCommand(
+                                () -> -mmRobot.gamepadEx1.getLeftY(),
+                                () -> mmRobot.gamepadEx1.getLeftX(),
+                                () -> -mmRobot.gamepadEx1.getRightX(),
+                                false, slowMode)
+
         );
     }
 
-
-    public void updateTelemetry(double[] power) {
-        FtcDashboard.getInstance().getTelemetry().addData("frontLeft", power[0]);
-        FtcDashboard.getInstance().getTelemetry().addData("backLeft", power[1]);
-        FtcDashboard.getInstance().getTelemetry().addData("frontRight", power[2]);
-        FtcDashboard.getInstance().getTelemetry().addData("backRight", power[3]);
-        FtcDashboard.getInstance().getTelemetry().update();
+    public void setPose(Pose pose) {
+        follower.setPose(pose);
     }
 
-    public void turnWithScale(double turn) {
-        double flPower = turn;
-        double blPower = turn;
-        double frPower = -turn;
-        double brPower = -turn;
-
-        // Scale power values safely between -1.0 and 1.0
-        double max = Math.max(Math.abs(flPower), Math.abs(blPower));
-        max = Math.max(max, Math.abs(frPower));
-        max = Math.max(max, Math.abs(brPower));
-        if (max > 1.0) {
-            flPower /= max; blPower /= max; frPower /= max; brPower /= max;
-        }
-
-        motorFL.setPower(flPower);
-        motorBL.setPower(blPower);
-        motorFR.setPower(frPower);
-        motorBR.setPower(brPower);
+    public Pose getPose() {
+        return follower.getPose();
     }
+
+    public void setPose(double x, double y, double heading) {
+        this.setPose(new Pose(x, y, heading));
+    }
+
+    public void reset() {
+        follower = null;
+    }
+
 }

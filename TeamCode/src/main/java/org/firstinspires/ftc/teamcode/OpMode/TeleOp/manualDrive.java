@@ -27,13 +27,10 @@ public class manualDrive extends MMOpMode {
                 .build(this);
 
         //Drive
-        new Trigger(() -> MMRobot.getInstance().gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.05).whileActiveContinuous(
-                MMRobot.getInstance().driveTrain.slowmodeFieldOrientedDriveCommand()
-        );
+        MMRobot.getInstance().driveTrain.enableTeleopDrive(()->false);
 
         robotInstance.gamepadEx1.getGamepadButton(GamepadKeys.Button.OPTIONS).whenPressed(
-                MMRobot.getInstance().driveTrain.resetYawCommand()
-        );
+                new InstantCommand(()->MMRobot.getInstance().driveTrain.resetYaw()));
 
 
 
